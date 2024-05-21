@@ -1,0 +1,271 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <style>
+        th {
+            font-size: .7rem !important;
+        }
+    </style>
+
+    <div class="page-wrapper">
+
+        <div class="page-header d-print-none">
+            <div class="container-xl">
+                <div class="row g-2 align-items-center">
+                    <div class="col">
+                        <h2 class="page-title">
+                            Requirement Categories
+                        </h2>
+                    </div>
+                    <div class="col-auto ms-auto d-print-none">
+                        <div class="btn-list">
+                            <span class="d-none d-sm-inline">
+                                <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-restore-category">
+                                    Recycle Bin
+                                </a>
+                            </span>
+                            <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-new-category">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                                Create Category
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-body">
+            <div class="container-xl">
+
+                {% comment %} Create Modal  {% endcomment %}
+                <div class="modal modal-blur fade" id="modal-new-category" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="alert-primary" role="alert">
+                                    <div class="d-flex">
+                                        <div>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                <circle cx="12" cy="12" r="9"></circle>
+                                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                                <polyline points="11 12 12 12 12 16 13 16"></polyline>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h5 class="modal-title">Creating a category</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <span>Dito yung slight explanation natin bakit kailangan ni user gumawa ng reqs. category para lang magkaroon siya ng headstart sa pag-walk through sa module na ito.</span>
+                                <input type="text" class="mt-4 form-control" name="example-text-input" placeholder="Add new category title">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% comment %} Restore Modal  {% endcomment %}
+                <div class="modal modal-blur fade" id="modal-restore-category" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Restoring a category</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                
+                                Dito yung slight explanation natin bakit kailangan ni user magrestore ng deleted categories para lang magkaroon siya ng headstart sa pag-walk through sa module na ito.
+                                <label class="mt-4 dropdown-item form-switch"><input class="form-check-input m-0 me-2" type="checkbox">Select/Unselect all</label>
+                                
+                                <div class="mt-4 table-responsive">
+                                    <table class="table card-table table-vcenter text-nowrap datatable">
+                                        <thead>
+                                            <tr>
+                                            <th>
+                                                <input class="form-check-input m-0 align-middle" type="checkbox">
+                                            </th>
+                                            <th>Requirement Category</th>
+                                            <th>Date Deleted</th>
+                                            <th>Modified by</th>
+                                            <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <input class="form-check-input m-0 align-middle" type="checkbox">
+                                                </td>
+                                                <td>
+                                                    Requirement Category No.1
+                                                </td>
+                                                <td>
+                                                    May 22, 2024
+                                                </td>
+                                                <td>
+                                                    Administrator
+                                                </td>
+                                                <td class="text-center">
+                                                    <button class="btn align-text-top">Restore</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% comment %} Edit Modal  {% endcomment %}
+                <div class="modal modal-blur fade" id="modal-cat-edit" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Editing a category</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="text" class="form-control" name="example-text-input" placeholder="Edit category title">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% comment %} Soft Delete Modal  {% endcomment %}
+                <div class="modal modal-blur fade" id="modal-cat-sdelete" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <div class="modal-body text-center py-4">
+                                
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
+                                <h3>Are you sure?</h3>
+                                <div class="text-muted">Do you really want to remove this category title?</div>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="w-100">
+                                    <div class="row">
+                                        <div class="col">
+                                            <a href="#" class="btn w-100" data-bs-dismiss="modal">
+                                                Cancel
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a href="#" class="btn btn-danger w-100" data-bs-dismiss="modal">
+                                                Delete
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="card">
+
+                        <div class="card-body border-bottom py-3">
+                            <div class="d-flex">
+                                <div class="text-muted">
+                                    Show
+                                    <div class="mx-2 d-inline-block">
+                                    <input type="text" class="form-control form-control-sm" value="8" size="3" aria-label="Invoices count">
+                                    </div>
+                                    entries
+                                </div>
+                                <div class="ms-auto text-muted">
+                                    Search:
+                                    <div class="ms-2 d-inline-block">
+                                    <input type="text" class="form-control form-control-sm" aria-label="Search invoice">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table card-table table-vcenter text-nowrap datatable">
+                                <thead>
+                                    <tr>
+                                    <th>Category Title</th>
+                                    <th>Created by</th>
+                                    <th>Created at</th>
+                                    <th>Modified by</th>
+                                    <th>Modified at</th>
+                                    <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            Requirement Type No.1
+                                        </td>
+                                        <td>
+                                            Administrator
+                                        </td>
+                                        <td>
+                                            May 22, 2024
+                                        </td>
+                                        <td>
+                                            Administrator
+                                        </td>
+                                        <td>
+                                            May 22, 2024 <!--span class="badge bg-success me-1"></!--span-->
+                                        </td>
+                                        <td class="text-center">
+                                            <button class="btn align-text-top" data-bs-toggle="modal" data-bs-target="#modal-cat-edit">Edit</button>
+                                            <button class="btn align-text-top" data-bs-toggle="modal" data-bs-target="#modal-cat-sdelete">Delete</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="card-footer d-flex align-items-center">
+                            <p class="m-0 text-muted">Showing <span>1</span> to <span>8</span> of <span>16</span> entries</p>
+                            <ul class="pagination m-0 ms-auto">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                                    <!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>
+                                    prev
+                                    </a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">
+                                    next <!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
