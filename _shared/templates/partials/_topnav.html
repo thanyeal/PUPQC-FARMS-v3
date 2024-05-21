@@ -1,0 +1,141 @@
+{% load static %}
+
+    <style>
+        .nav-link-title {
+            font-size: 0.98rem !important;
+            font-weight: 5  00;
+        }
+        .nav-item {
+            
+            min-width: 5rem !important;
+        }
+        .mr-ml {
+            margin: 0px 10px !important ;
+        }
+    </style>
+
+    <div class="navbar-expand-md">
+        <div class="collapse navbar-collapse" id="navbar-menu">
+            <div class="navbar">
+                <div class="container-xl">
+                    <ul class="navbar-nav">
+                        <li id="active-dashboard" class="nav-item">
+                            <a class="nav-link" href="{% url 'dashboard:dashboard' %}" >
+                                <span class="nav-link-title text-center mr-ml">
+                                    Dashboard
+                                </span>
+                            </a>
+                        </li>
+                        <li id="active-categories" class="nav-item ">
+                            <a class="nav-link" href="{% url 'requirements:categories' %}" >
+                                <span class="nav-link-title text-center mr-ml">
+                                    Requirement Categories
+                                </span>
+                            </a>
+                        </li>
+                        <li id="active-types" class="nav-item ">
+                            <a class="nav-link" href="{% url 'requirements:types' %}" >
+                                <span class="nav-link-title text-center mr-ml">
+                                    Requirement Type
+                                </span>
+                            </a>
+                        </li>
+                        <li id="active-bins" class="nav-item ">
+                            <a class="nav-link" href="{% url 'requirements:bin' %}" >
+                                <span class="nav-link-title text-center mr-ml">
+                                    Requirement Bin
+                                </span>
+                            </a>
+                        </li>
+                        <li id="active-reports" class="nav-item ">
+                            <a class="nav-link" href="{% url 'reports:reports' %}" >
+                                <span class="nav-link-title text-center mr-ml">
+                                    Reports
+                                </span>
+                            </a>
+                        </li>
+                        <li id="active-users" class="nav-item">
+                            <a class="nav-link" href="{% url 'accounts:users' %}" >
+                            <span class="nav-link-title text-center mr-ml">
+                                Users
+                            </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        var active_request = JSON.parse('{{ requestz|safe }}');
+        var currentURL = window.location.href;
+        var urlsToCheck = [
+            "{% url 'accounts:users' %}"            ,
+            "{% url 'dashboard:dashboard' %}"       , 
+            "{% url 'reports:reports' %}"           ,
+            "{% url 'requirements:categories' %}"   ,
+            "{% url 'requirements:bin' %}"          ,
+            "{% url 'requirements:types' %}"
+        ];
+    
+        urlsToCheck.forEach(function(urlToCheck) {
+            var elementId = "";
+            if (currentURL.includes(urlToCheck)) {
+                if (urlToCheck === "{% url 'accounts:users' %}") {
+                    elementId = "active-users";
+                } 
+                else if (urlToCheck === "{% url 'dashboard:dashboard' %}") {
+                    elementId = "active-dashboard";
+                }
+                else if (urlToCheck === "{% url 'reports:reports' %}") {
+                    elementId = "active-reports";
+                }
+                else if (urlToCheck === "{% url 'requirements:categories' %}") {
+                    elementId = "active-categories";
+                }
+                else if (urlToCheck === "{% url 'requirements:bin' %}") {
+                    elementId = "active-bins";
+                }
+                else if (urlToCheck === "{% url 'requirements:types' %}") {
+                    elementId = "active-types";
+                }
+    
+                var element = document.getElementById(elementId);
+                if (element) {
+                    if (!element.classList.contains(active_request)) {
+                        element.classList.add(active_request);
+                    }
+                }
+            } 
+            
+            else {
+                if (urlToCheck === "{% url 'accounts:users' %}") {
+                    elementId = "active-users";
+                } 
+                else if (urlToCheck === "{% url 'dashboard:dashboard' %}") {
+                    elementId = "active-dashboard";
+                }
+                else if (urlToCheck === "{% url 'reports:reports' %}") {
+                    elementId = "active-reports";
+                }
+                else if (urlToCheck === "{% url 'requirements:categories' %}") {
+                    elementId = "active-categories";
+                }
+                else if (urlToCheck === "{% url 'requirements:bin' %}") {
+                    elementId = "active-bins";
+                }
+                else if (urlToCheck === "{% url 'requirements:types' %}") {
+                    elementId = "active-types";
+                }
+    
+                var element = document.getElementById(elementId);
+                if (element) {
+                    if (element.classList.contains(active_request)) {
+                        element.classList.remove(active_request);
+                    }
+                }
+            }
+        });
+    </script>
