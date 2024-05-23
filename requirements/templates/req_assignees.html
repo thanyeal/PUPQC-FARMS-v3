@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <style>
+        th {
+            font-size: .7rem !important;
+        }
+    </style>
+
+    <div class="page-wrapper">
+
+        <div class="page-header d-print-none">
+            <div class="container-xl">
+                <div class="row g-2 align-items-center">
+                    <div class="col">
+                        <h2 class="page-title">
+                            Requirement Assignees
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-body">
+            <div class="container-xl">
+
+                <div class="row row-cards">
+
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="me-3">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-md"   width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-books"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 4m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" /><path d="M9 4m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" /><path d="M5 8h4" /><path d="M9 16h4" /><path d="M13.803 4.56l2.184 -.53c.562 -.135 1.133 .19 1.282 .732l3.695 13.418a1.02 1.02 0 0 1 -.634 1.219l-.133 .041l-2.184 .53c-.562 .135 -1.133 -.19 -1.282 -.732l-3.695 -13.418a1.02 1.02 0 0 1 .634 -1.219l.133 -.041z" /><path d="M14 9l4 -1" /><path d="M16 16l3.923 -.98" /></svg>
+                                    </div>
+                                    <div>
+                                    <h3 class="lh-1 mt-3">Requirement Bin No.1</h3>
+                                    </div>
+                                </div>
+                                <div class="text-muted mb-3">
+                                    <p>
+                                        This requirement bin must contain the documents that are used to track the performance of faculty members during the first semester of this academic year. Please comply with the requirements before the deadline
+                                    </p>
+                                </div>
+                                <h4>Posted by:</h4>
+                                <ul class="list-unstyled space-y-1">
+                                    <li>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon text-green" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
+                                    <span>Administrator</span>
+                                    </li>
+                                </ul>
+                                <h4>Posted at:</h4>
+                                <ul class="list-unstyled space-y-1">
+                                    <li>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon text-green" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
+                                    <span>May 22, 2024 - 04:04 PM</span>
+                                    </li>
+                                </ul>
+                                <h4>Deadline:</h4>
+                                <ul class="list-unstyled space-y-1">
+                                    <li>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon text-green" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
+                                        <span>May 23, 2024 - 11:59 PM</span>
+                                    </li>
+                                </ul>
+                                <h4>Status:</h4>
+                                <ul class="list-unstyled space-y-1">
+                                    <li>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon text-green" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
+                                        <span>On Going</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-footer">
+                                Note:
+                                <a href="#" target="_blank">This is an important requirement</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8">
+                        <div class="col-12">
+                            <div class="card">
+
+                                <div class="card-body border-bottom py-3">
+                                    <div class="d-flex">
+                                        <div class="text-muted">
+                                            Show
+                                            <div class="mx-2 d-inline-block">
+                                            <input type="text" class="form-control form-control-sm" value="8" size="3" aria-label="Invoices count">
+                                            </div>
+                                            entries
+                                        </div>
+                                        <div class="ms-auto text-muted">
+                                            Search:
+                                            <div class="ms-2 d-inline-block">
+                                            <input type="text" class="form-control form-control-sm" aria-label="Search invoice">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="table-responsive">
+                                    <table class="table card-table table-vcenter text-nowrap datatable">
+                                        <thead>
+                                            <tr>
+                                            <th>Faculty Member</th>
+                                            <th>Webmail</th>
+                                            <th>Faculty Role</th>
+                                            <th>Reviewed</th>
+                                            <th>Compliance Status</th>
+                                            <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    User
+                                                </td>
+                                                <td>
+                                                    user@pup.edu.ph
+                                                </td>
+                                                <td>
+                                                    Regular Faculty
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-green-lt">Reviewed</span>
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-red-lt">Incomplete</span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a href=" {% url 'monitoring:monitor' %} "><button class="btn align-text-top"">Monitor</button></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="card-footer d-flex align-items-center">
+                                    <p class="m-0 text-muted">Showing <span>1</span> to <span>8</span> of <span>16</span> entries</p>
+                                    <ul class="pagination m-0 ms-auto">
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                                            <!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>
+                                            prev
+                                            </a>
+                                        </li>
+                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">4</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">5</a></li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">
+                                            next <!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

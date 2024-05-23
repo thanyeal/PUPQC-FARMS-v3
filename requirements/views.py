@@ -32,3 +32,11 @@ def req_set(request):
         'requestz' : serialized_state , 
     }
     return render(request, 'req_set.html', context)
+
+def req_assignees(request):
+    state = 'active'
+    serialized_state = json.dumps(state)
+    context = {
+        'requestz' : serialized_state , 
+    }
+    return render(request, 'req_assignees.html', context)
