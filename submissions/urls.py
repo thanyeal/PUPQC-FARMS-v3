@@ -5,5 +5,5 @@ app_name = 'submissions'
 
 urlpatterns = [
 
-    path('', views.submissions_module, name='submissions_module'),
+    path('', views.submissions_module, name='submission'),
 ]
