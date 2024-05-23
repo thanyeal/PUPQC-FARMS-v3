@@ -47,6 +47,13 @@
                                 </span>
                             </a>
                         </li>
+                        <li id="active-subm" class="nav-item ">
+                            <a class="nav-link" href="{% url 'submissions:submission' %}" >
+                                <span class="nav-link-title text-center mr-ml">
+                                    Requirement Submission
+                                </span>
+                            </a>
+                        </li>
                         <li id="active-reports" class="nav-item ">
                             <a class="nav-link" href="{% url 'reports:reports' %}" >
                                 <span class="nav-link-title text-center mr-ml">
@@ -77,7 +84,9 @@
             "{% url 'reports:reports' %}"           ,
             "{% url 'requirements:categories' %}"   ,
             "{% url 'requirements:bin' %}"          ,
-            "{% url 'requirements:types' %}"
+            "{% url 'requirements:types' %}"        ,
+            "{% url 'monitoring:monitor' %}"        ,
+            "{% url 'submissions:submission' %}"
         ];
     
         urlsToCheck.forEach(function(urlToCheck) {
@@ -100,6 +109,9 @@
                 }
                 else if (urlToCheck === "{% url 'requirements:types' %}") {
                     elementId = "active-types";
+                }
+                else if (urlToCheck === "{% url 'submissions:submission' %}") {
+                    elementId = "active-subm";
                 }
     
                 var element = document.getElementById(elementId);
@@ -128,6 +140,9 @@
                 }
                 else if (urlToCheck === "{% url 'requirements:types' %}") {
                     elementId = "active-types";
+                }
+                else if (urlToCheck === "{% url 'submissions:submission' %}") {
+                    elementId = "active-subm";
                 }
     
                 var element = document.getElementById(elementId);
