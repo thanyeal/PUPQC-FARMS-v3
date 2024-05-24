@@ -1,0 +1,315 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <style>
+        th {
+            font-size: .7rem !important;
+        }
+    </style>
+
+    <div class="page-wrapper">
+
+        <div class="page-header d-print-none">
+            <div class="container-xl">
+                <div class="row g-2 align-items-center">
+                    <div class="col">
+                        <h2 class="page-title">
+                            List of Assigned Requirements
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-body">
+            <div class="container-xl">
+
+                {% comment %} Soft Copy Modal  {% endcomment %}
+                <div class="modal modal-lg modal-blur fade" id="modal-scopy-subm" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="alert-primary" role="alert">
+                                    <div class="d-flex">
+                                        <div>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                <circle cx="12" cy="12" r="9"></circle>
+                                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                                <polyline points="11 12 12 12 12 16 13 16"></polyline>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h5 class="modal-title">Submit a soft copy</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <span>Dito yung slight explanation natin paano magupload si user ng reqs para lang magkaroon siya ng headstart sa pag-walk through sa module na ito.</span>
+
+                                <label class="mt-4 form-label strong">Status</label>
+                                <div class="text-green">
+                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-progress-alert"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 20.777a8.942 8.942 0 0 1 -2.48 -.969" /><path d="M14 3.223a9.003 9.003 0 0 1 0 17.554" /><path d="M4.579 17.093a8.961 8.961 0 0 1 -1.227 -2.592" /><path d="M3.124 10.5c.16 -.95 .468 -1.85 .9 -2.675l.169 -.305" /><path d="M6.907 4.579a8.954 8.954 0 0 1 3.093 -1.356" /><path d="M12 8v4" /><path d="M12 16v.01" /></svg>
+                                    <span>In Review</span>
+                                </div>
+
+                                <label class="mt-4 form-label strong">Remarks</label>
+                                <input type="text" class="form-control" placeholder="Some remarks" autocomplete="off" disabled>
+
+                                <div class="mt-4">Files</div>
+                                <div class="divide-y">
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <span class="avatar">IG</span>
+                                        </div>
+                                        <div class="col">
+                                            <div class="text-truncate">
+                                                <b>Submission Date:</b>
+                                            </div>
+                                            <div class="text-muted">May 23, 2024 06:13 PM</div>
+                                        </div>
+                                        <div class="col-auto align-self-center">
+                                            <div class="badge bg-primary"></div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <span class="avatar">IG</span>
+                                        </div>
+                                        <div class="col">
+                                            <div class="text-truncate">
+                                                <b>Faculty Note:</b>
+                                            </div>
+                                            <div class="text-muted">
+                                                <input type="text" class="form-control mt-1" placeholder="Some remarks" autocomplete="off">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <span class="avatar">IG</span>
+                                        </div>
+                                        <div class="col">
+                                            <div class="text-truncate">
+                                                <b>Submitted Files:</b>
+                                            </div>
+                                            <div class="text-muted">
+                                                <span>Soft Copies.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn me-auto" data-bs-dismiss="modal">Reject</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Approve</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% comment %} Hard Copy Modal  {% endcomment %}
+                <div class="modal modal-lg modal-blur fade" id="modal-hcopy-subm" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="alert-primary" role="alert">
+                                    <div class="d-flex">
+                                        <div>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                <circle cx="12" cy="12" r="9"></circle>
+                                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                                <polyline points="11 12 12 12 12 16 13 16"></polyline>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h5 class="modal-title">Submit a hard copy</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <span>Dito yung slight explanation natin paano maglagay si user ng ng hard copy info para lang magkaroon siya ng headstart sa pag-walk through sa module na ito.</span>
+
+                                <label class="mt-4 form-label strong">Date of Submission</label>
+                                <div class="input-icon mb-2">
+                                    <input class="form-control " placeholder="Select a date" id="datepicker-icon" value="2024-01-01"/>
+                                    <span class="input-icon-addon"><!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M11 15h1" /><path d="M12 15v3" /></svg>
+                                    </span>
+                                </div>
+
+                                <div class="divide-y mt-4">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="text-truncate">
+                                                <b>Your Note to the Evaluator</b>
+                                            </div>
+                                            <div class="text-muted">
+                                                <input type="text" class="form-control mt-1" placeholder="Some notes" autocomplete="off">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row row-cards">
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4>Required Document/s:</h4>
+                                <ul class="list-unstyled space-y-1">
+                                    <li>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon text-green" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
+                                    <span>Requirement Bin No. 1</span>
+                                    </li>
+                                </ul>
+                                <h4>Deadline:</h4>
+                                <ul class="list-unstyled space-y-1">
+                                    <li>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon text-green" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
+                                    <span>May 23, 2024 - 11:59 PM</span>
+                                    </li>
+                                </ul>
+                                <h4>Requirement Status:</h4>
+                                <ul class="list-unstyled space-y-1">
+                                    <li>
+                                        <svg  xmlns="http://www.w3.org/2000/svg" class="icon text-danger" width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
+                                        <span class="text-danger">Incomplete</span>
+                                    </li>
+                                </ul>
+                                <h4>Compliance Status:</h4>
+                                <ul class="list-unstyled space-y-1">
+                                    <li>
+                                        <svg  xmlns="http://www.w3.org/2000/svg" class="icon text-danger" width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
+                                        <span class="text-danger">Incomplete</span>
+                                    </li>
+                                </ul>
+                                <h4>Review Status:</h4>
+                                <ul class="list-unstyled space-y-1">
+                                    <li>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon text-success" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
+                                        <span class="text-success">Reviewed</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-footer">
+                                Note:
+                                <a href="#" target="_blank">This is an important requirement</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="col-12">
+                            <div class="card">
+
+                                <div class="card-body border-bottom py-3">
+                                    <div class="d-flex">
+                                        <div class="text-muted">
+                                            Show
+                                            <div class="mx-2 d-inline-block">
+                                            <input type="text" class="form-control form-control-sm" value="8" size="3" aria-label="Invoices count">
+                                            </div>
+                                            entries
+                                        </div>
+                                        <div class="ms-auto text-muted">
+                                            Search:
+                                            <div class="ms-2 d-inline-block">
+                                            <input type="text" class="form-control form-control-sm" aria-label="Search invoice">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="table-responsive">
+                                    <table class="table card-table table-vcenter text-nowrap datatable">
+                                        <thead>
+                                            <tr>
+                                            <th>Requirement/s</th>
+                                            <th>Submission Date</th>
+                                            <th>Timeliness</th>
+                                            <th>Submission Type</th>
+                                            <th>Status</th>
+                                            <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    Requirement Bin No.1
+                                                </td>
+                                                <td>
+                                                    May 23, 2024 - 11:59 PM
+                                                </td>
+                                                <td>
+                                                    1 day/s ahead of deadline
+                                                </td>
+                                                <td>
+                                                    Hard Copy
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-green-lt">In Review</span>
+                                                </td>
+                                                <td class="text-center col-auto">
+                                                    <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Upload
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-scopy-subm">Soft Copy</a>
+                                                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-hcopy-subm">Hard Copy</a>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="card-footer d-flex align-items-center">
+                                    <p class="m-0 text-muted">Showing <span>1</span> to <span>8</span> of <span>16</span> entries</p>
+                                    <ul class="pagination m-0 ms-auto">
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                                            <!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>
+                                            prev
+                                            </a>
+                                        </li>
+                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">4</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">5</a></li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">
+                                            next <!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
