@@ -62,7 +62,30 @@
                             </div>
                             <div class="modal-body">
                                 <span>Dito yung slight explanation natin bakit kailangan ni user gumawa ng reqs. category para lang magkaroon siya ng headstart sa pag-walk through sa module na ito.</span>
-                                <input type="text" class="mt-4 form-control" name="example-text-input" placeholder="Add new category title">
+                                
+                                <label class="mt-4 form-label">New Category Title</label>
+                                <input type="text" class="form-control" name="example-text-input" placeholder="ex. Requirement Category No.1">
+
+                                <label class="mt-3 form-label">Semester</label>
+                                <label class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="radios-inline" checked="">
+                                        <span class="form-check-label">First</span>
+                                    </label>
+                                    <label class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="radios-inline">
+                                    <span class="form-check-label">Second</span>
+                                </label>
+
+                                <label class="mt-3 form-label">Academic Year</label>
+                                <select class="col-auto form-select form-select mb-3" aria-label="Large select example">
+                                    <option selected>Year Start</option>
+                                    <option value="2">2024</option>
+                                </select>
+                                <select class="col-auto form-select form-select mb-3" aria-label="Large select example">
+                                    <option selected>Year End</option>
+                                    <option value="3">2025</option>
+                                </select>
+
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
@@ -112,7 +135,7 @@
                                                     Administrator
                                                 </td>
                                                 <td class="text-center">
-                                                    <button class="btn align-text-top">Restore</button>
+                                                    <button class="btn align-text-top" data-bs-toggle="modal" data-bs-target="#modal-cat-hdelete">Permanent Delete</button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -121,7 +144,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Restore</button>
                             </div>
                         </div>
                     </div>
@@ -156,6 +179,37 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
                                 <h3>Are you sure?</h3>
                                 <div class="text-muted">Do you really want to remove this category title?</div>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="w-100">
+                                    <div class="row">
+                                        <div class="col">
+                                            <a href="#" class="btn w-100" data-bs-dismiss="modal">
+                                                Cancel
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a href="#" class="btn btn-danger w-100" data-bs-dismiss="modal">
+                                                Remove
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% comment %} Hard Delete Modal  {% endcomment %}
+                <div class="modal modal-blur fade" id="modal-cat-hdelete" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <div class="modal-body text-center py-4">
+                                
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
+                                <h3>This action cannot be undone!</h3>
+                                <div class="text-muted">Do you really want to delete this category?</div>
                             </div>
                             <div class="modal-footer">
                                 <div class="w-100">
@@ -207,6 +261,8 @@
                                     <th>Created at</th>
                                     <th>Modified by</th>
                                     <th>Modified at</th>
+                                    <th>Semester</th>
+                                    <th>School Year</th>
                                     <th></th>
                                     </tr>
                                 </thead>
@@ -227,9 +283,15 @@
                                         <td>
                                             May 22, 2024 <!--span class="badge bg-success me-1"></!--span-->
                                         </td>
+                                        <td>
+                                            First
+                                        </td>
+                                        <td>
+                                            2023-2024
+                                        </td>
                                         <td class="text-center">
                                             <button class="btn align-text-top" data-bs-toggle="modal" data-bs-target="#modal-cat-edit">Edit</button>
-                                            <button class="btn align-text-top" data-bs-toggle="modal" data-bs-target="#modal-cat-sdelete">Delete</button>
+                                            <button class="btn align-text-top" data-bs-toggle="modal" data-bs-target="#modal-cat-sdelete">Remove</button>
                                         </td>
                                     </tr>
                                 </tbody>

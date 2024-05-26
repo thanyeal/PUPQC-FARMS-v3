@@ -9,9 +9,13 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
         <title>myPUPQC-FARMS</title>
         {% include 'partials/_cssdep.html' %}
+        
     </head>
 
-    <body>
+    <body style="font-family: 'Figtree' !important">
+
+        {% include 'partials/_alerts.html' %}
+
         <div class="page page-center">
             <div class="container container-tight py-4">
                 <div class="text-center mb-4">
@@ -55,11 +59,12 @@
                 <div class="text-center mb-4">
                                     
                     <p class="text-sm text-gray-600">By using this service, you understood, agree, and follow <br/> to the Polytechnic University of the Philippines
-                        <br/><a href="https://www.pup.edu.ph/terms/" class="text-primary text-decoration-none fst-normal fw-medium">Terms of Use</a>
-                        and <a href="https://www.pup.edu.ph/privacy/" class="text-primary text-decoration-none fst-normal fw-medium">Privacy Statement</a></p>
+                        <br/><a href="https://www.pup.edu.ph/terms/" class="text-primary fst-normal fw-semibold">Terms of Use</a>
+                        and <a href="https://www.pup.edu.ph/privacy/" class="text-primary fst-normal fw-semibold">Privacy Statement</a></p>
                 </div>
             </div>
         </div>
+
     </body>
 
     {% include 'partials/_jvsdep.html' %}
