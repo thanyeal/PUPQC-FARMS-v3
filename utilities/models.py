@@ -16,14 +16,17 @@ class SchoolYear(models.Model):
 
     
     class Meta:
-        db_table = 'FARMSSchoolYear' 
+        db_table = 'FARMSSchoolYear'
+
+    def __str__(self):
+        return(self.name) 
 
 
 
 # Create your models here.
 class Semester(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    school_year = models.ForeignKey(SchoolYear, on_delete=models.PROTECT, related_name='created_program_accreditation', null=True, blank=True)
+    school_year = models.ForeignKey(SchoolYear, on_delete=models.PROTECT, related_name='sy_semester', null=True, blank=True)
     name = models.CharField(max_length=150) 
     start_date = models.DateField()
     end_date = models.DateField()
