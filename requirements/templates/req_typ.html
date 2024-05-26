@@ -59,7 +59,7 @@
                     </div>
                     <div class="modal-body">
                         <span>Dito yung slight explanation natin bakit kailangan ni user gumawa ng reqs. types para lang magkaroon siya ng headstart sa pag-walk through sa module na ito.</span>
-                        <input type="text" class="mt-4 form-control" name="example-text-input" placeholder="Add new type title">
+                        <input type="text" class="mt-4 form-control" name="example-text-input" placeholder="Add new requirement type title">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
@@ -78,9 +78,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        
                         <p>Dito yung slight explanation natin bakit kailangan ni user magrestore ng deleted types para lang magkaroon siya ng headstart sa pag-walk through sa module na ito.</p>
-                        
                         <div class="mt-4 table-responsive">
                             <table class="table card-table table-vcenter text-nowrap datatable">
                                 <thead>
@@ -109,7 +107,7 @@
                                             Administrator
                                         </td>
                                         <td class="text-center">
-                                            <button class="btn align-text-top">Restore</button>
+                                            <button class="btn align-text-top" data-bs-toggle="modal" data-bs-target="#modal-type-hdelete">Permanent Delete</button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -118,7 +116,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Restore</button>
                     </div>
                 </div>
             </div>
@@ -153,6 +151,37 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
                         <h3>Are you sure?</h3>
                         <div class="text-muted">Do you really want to remove this requirement type title?</div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="w-100">
+                            <div class="row">
+                                <div class="col">
+                                    <a href="#" class="btn w-100" data-bs-dismiss="modal">
+                                        Cancel
+                                    </a>
+                                </div>
+                                <div class="col">
+                                    <a href="#" class="btn btn-danger w-100" data-bs-dismiss="modal">
+                                        Remove
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% comment %} Hard Delete Modal  {% endcomment %}
+        <div class="modal modal-blur fade" id="modal-type-hdelete" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-body text-center py-4">
+                        
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
+                        <h3>This action cannot be undone!</h3>
+                        <div class="text-muted">Do you really want to delete this type title?</div>
                     </div>
                     <div class="modal-footer">
                         <div class="w-100">
@@ -201,7 +230,7 @@
                             <table class="table card-table table-vcenter text-nowrap datatable">
                                 <thead>
                                     <tr>
-                                    <th>Requirement Title</th>
+                                    <th>Type Title</th>
                                     <th>Requirement Category</th>
                                     <th>Created by</th>
                                     <th>Created at</th>
@@ -232,7 +261,7 @@
                                         </td>
                                         <td class="text-center">
                                             <button class="btn align-text-top" data-bs-toggle="modal" data-bs-target="#modal-type-edit">Edit</button>
-                                            <button class="btn align-text-top" data-bs-toggle="modal" data-bs-target="#modal-type-sdelete">Delete</button>
+                                            <button class="btn align-text-top" data-bs-toggle="modal" data-bs-target="#modal-type-sdelete">Remove</button>
                                         </td>
                                     </tr>
                                 </tbody>
