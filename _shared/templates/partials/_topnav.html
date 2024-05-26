@@ -68,12 +68,18 @@
                             </span>
                             </a>
                         </li>
+                        <li id="active-util" class="nav-item">
+                            <a class="nav-link" href="{% url 'utilities:roles' %}" >
+                            <span class="nav-link-title text-center mr-ml">
+                                Utilities
+                            </span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
-
 
     <script>
         var active_request = JSON.parse('{{ requestz|safe }}');
@@ -86,7 +92,8 @@
             "{% url 'requirements:bin' %}"          ,
             "{% url 'requirements:types' %}"        ,
             "{% url 'monitoring:monitor' %}"        ,
-            "{% url 'submissions:submission' %}"
+            "{% url 'submissions:submission' %}"    ,
+            "{% url 'utilities:roles' %}"           ,
         ];
     
         urlsToCheck.forEach(function(urlToCheck) {
@@ -112,6 +119,9 @@
                 }
                 else if (urlToCheck === "{% url 'submissions:submission' %}") {
                     elementId = "active-subm";
+                }
+                else if (urlToCheck === "{% url 'utilities:roles' %}") {
+                    elementId = "active-util";
                 }
     
                 var element = document.getElementById(elementId);
@@ -143,6 +153,9 @@
                 }
                 else if (urlToCheck === "{% url 'submissions:submission' %}") {
                     elementId = "active-subm";
+                }
+                else if (urlToCheck === "{% url 'utilities:roles' %}") {
+                    elementId = "active-util";
                 }
     
                 var element = document.getElementById(elementId);
