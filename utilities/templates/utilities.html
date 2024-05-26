@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <style>
+        th {
+            font-size: .7rem !important;
+        }
+    </style>
+
+    <div class="page-wrapper">
+
+        <div class="page-header d-print-none">
+            <div class="container-xl">
+                <div class="row g-2 align-items-center">
+                    <div class="col">
+                        <h2 class="page-title">
+                            Utilities
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-body">
+            <div class="container-xl">
+
+                {% comment %} Authenticate Modal  {% endcomment %}
+                <div class="modal modal-blur fade" id="modal-util-auth" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <div class="modal-body text-center py-4">
+                                
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-dark icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
+                                <h3>We need to verify this request</h3>
+                                
+                                <input type="password" class="form-control" placeholder="Please enter your password." autocomplete="off">
+
+                            </div>
+                            <div class="modal-footer">
+                                <div class="w-100">
+                                    <div class="row">
+                                        <div class="col">
+                                            <a href="#" class="btn w-100" data-bs-dismiss="modal">
+                                                Cancel
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a href="{% url 'utilities:permissions' %}" class="btn btn-dark w-100">
+                                                Proceed
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="card">
+
+                        <div class="card-body border-bottom py-3">
+                            <div class="d-flex">
+                                <div class="text-muted">
+                                    Show
+                                    <div class="mx-2 d-inline-block">
+                                    <input type="text" class="form-control form-control-sm" value="8" size="3" aria-label="Invoices count">
+                                    </div>
+                                    entries
+                                </div>
+                                <div class="ms-auto text-muted">
+                                    Search:
+                                    <div class="ms-2 d-inline-block">
+                                    <input type="text" class="form-control form-control-sm" aria-label="Search invoice">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table card-table table-vcenter text-nowrap datatable">
+                                <thead>
+                                    <tr>
+                                    <th>Role Name</th>
+                                    <th>Restricted Profile Access</th>
+                                    <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            Regular Faculty
+                                        </td>
+                                        <td>
+                                            <input class="form-check-input m-0 align-middle" type="checkbox" readonly disabled checked="">
+                                        </td>
+                                        <td class="text-center">
+                                            <button class="btn align-text-top" data-bs-toggle="modal" data-bs-target="#modal-util-auth">Edit</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Part-time Faculty
+                                        </td>
+                                        <td>
+                                            <input class="form-check-input m-0 align-middle" type="checkbox" readonly disabled checked="">
+                                        </td>
+                                        <td class="text-center">
+                                            <button class="btn align-text-top" data-bs-toggle="modal" data-bs-target="#modal-util-auth">Edit</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Office Academic Staff
+                                        </td>
+                                        <td>
+                                            <input class="form-check-input m-0 align-middle" type="checkbox" readonly disabled checked="">
+                                        </td>
+                                        <td class="text-center">
+                                            <button class="btn align-text-top" data-bs-toggle="modal" data-bs-target="#modal-util-auth">Edit</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            University Director
+                                        </td>
+                                        <td>
+                                            <input class="form-check-input m-0 align-middle" type="checkbox" readonly disabled checked="">
+                                        </td>
+                                        <td class="text-center">
+                                            <button class="btn align-text-top" data-bs-toggle="modal" data-bs-target="#modal-util-auth">Edit</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Academic Head/Administrator
+                                        </td>
+                                        <td>
+                                            <input class="form-check-input m-0 align-middle" type="checkbox" readonly disabled>
+                                        </td>
+                                        <td class="text-center">
+                                            <button class="btn align-text-top" data-bs-toggle="modal" data-bs-target="#modal-util-auth">Edit</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="card-footer d-flex align-items-center">
+                            <p class="m-0 text-muted">Showing <span>1</span> to <span>8</span> of <span>16</span> entries</p>
+                            <ul class="pagination m-0 ms-auto">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                                    <!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>
+                                    prev
+                                    </a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">
+                                    next <!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+    

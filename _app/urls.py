@@ -29,5 +29,6 @@ urlpatterns = [
     path('submissions/' , include('submissions.urls' , namespace = 'submissions'  )),
     path('monitoring/'  , include('monitoring.urls'  , namespace = 'monitoring'   )),
     path('reports/'     , include('reports.urls'     , namespace = 'reports'      )),
+    path('utilities/'   , include('utilities.urls'   , namespace = 'utilities'    )),
 
 ]
