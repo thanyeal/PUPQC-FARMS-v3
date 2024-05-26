@@ -21,6 +21,15 @@ urlpatterns = [
     path('school-year/hard-delete/<uuid:pk>/', school_year.hard_delete, name='school-year-hard=delete'),
 
 
+    #--------------------------[ SCHOOL YEAR  MODULE URLS ]--------------------------#
+    path('semester/', semester.main, name='semester-main'),
+    path('semester/create/', semester.create, name='semester-create'),
+    path('semester/edit/<uuid:pk>/', semester.edit, name='semester-edit'),
+    path('semester/soft-delete/<uuid:pk>/', semester.soft_delete, name='semester-soft-delete'),
+    path('semester/restore/', semester.restore, name='semester-restore'),
+    path('semester/hard-delete/<uuid:pk>/', semester.hard_delete, name='semester-hard=delete'),
+
+
 
 
 ]

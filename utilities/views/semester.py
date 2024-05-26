@@ -1,20 +1,56 @@
+
+
 from utilities.forms import CreateSemester
 from django.http import JsonResponse, QueryDict
 from django.shortcuts import redirect, render
 import json
 from django.contrib import messages
-from utilities.models import Semester, Semester
+from utilities.models import RequirementCategory, Semester
 from utilities.views.semester import *
 from django.utils import timezone
 from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_protect
+
+def permissions(request):
+    state = 'active'
+    serialized_state = json.dumps(state)
+    context = {
+        'requestz' : serialized_state , 
+    }
+    return render(request, 'utilities.html', context)
+
+def permissions_edit(request):
+    state = 'active'
+    serialized_state = json.dumps(state)
+    context = {
+        'requestz' : serialized_state , 
+    }
+    return render(request, 'edit_utils.html', context)
+
+
+def req_cat(request):
+    state = 'active'
+    serialized_state = json.dumps(state)
+    context = {
+        'requestz' : serialized_state , 
+    }
+    return render(request, 'req_cat.html', context)
+
+def req_type(request):
+    state = 'active'
+    serialized_state = json.dumps(state)
+    context = {
+        'requestz' : serialized_state , 
+    }
+    return render(request, 'req_typ.html', context)
+
 
 
 def main(request):
     state = 'active'
     serialized_state = json.dumps(state)
     create_form = CreateSemester(request.POST or None)
-    records = Semester.objects.filter(is_deleted = False)
+    records = Semester.objects.select_related('school_year').filter(is_deleted = False)
     deleted_records = Semester.objects.filter(is_deleted = True)
 
 
@@ -96,7 +132,7 @@ def soft_delete(request, pk):
         record.is_deleted=True
         record.save()
         messages.success(request, f'The record is successfully deleted!') 
-        return redirect('utilities:school-year-main')
+        return redirect('utilities:semester-main')
     except Semester.DoesNotExist:
         return JsonResponse({'errors': 'School Year record not found. Please try Again'}, status=404)
 
@@ -143,7 +179,7 @@ def hard_delete(request, pk):
 
         child_record = Semester.objects.filter(school_year_id = pk).exists() 
         if child_record:
-            child_record_counts = Semester.objects.filter(school_year_id = pk).count()
+            child_record_counts = RequirementCategory.objects.filter(school_year_id = pk).count()
             return JsonResponse({'success': False, 'error': f'Unable to delete. This record has {child_record_counts} child records. To delete, first remove the child records.'})
 
         else:
@@ -275,3 +311,6 @@ def hard_delete(request, pk):
 #             return JsonResponse({'success': False, 'error': 'User not logged in'})
 
 #     return JsonResponse({'success': False, 'error': 'Invalid request'})
+
+
+

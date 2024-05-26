@@ -24,6 +24,7 @@
                 <table class="table card-table table-vcenter text-nowrap datatable">
                     <thead>
                         <tr>
+                            <th>School Year</th>
                             <th>Name</th>
                             <th>Start Date</th>
                             <th>End Date</th>
@@ -35,6 +36,10 @@
                     <tbody>
                         {% for record, update_form in details%}
                             <tr>
+                                <td>
+                                    S.Y. {{ record.school_year }}
+                                </td>
+
                                 <td>
                                     {{ record.name }}
                                 </td>

@@ -6,7 +6,7 @@
             event.preventDefault();
 
             $.ajax({
-                url: "{% url 'utilities:school-year-create' %}", 
+                url: "{% url 'utilities:semester-create' %}", 
                 data: serializedData,
                 type: "POST",
                 success: function(response) {
@@ -44,7 +44,7 @@
             event.preventDefault();
             event.stopPropagation();
             var serializedData = $("#edit-form-"+id).serialize();
-            var url = "/utilities/school-year/edit/"+id+"/";
+            var url = "/utilities/semester/edit/"+id+"/";
     
             $.ajax({
                 url: url, 
@@ -98,7 +98,7 @@
             event.preventDefault();
 
             $.ajax({
-                url: "{% url 'utilities:school-year-restore' %}", 
+                url: "{% url 'utilities:semester-restore' %}", 
                 data: serializedData,
                 type: "POST",
                 success: function(response) {
