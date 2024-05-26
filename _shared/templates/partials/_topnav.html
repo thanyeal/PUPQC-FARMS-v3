@@ -27,14 +27,14 @@
                             </a>
                         </li>
                         <li id="active-categories" class="nav-item ">
-                            <a class="nav-link" href="{% url 'requirements:categories' %}" >
+                            <a class="nav-link" href="{% url 'utilities:categories' %}" >
                                 <span class="nav-link-title text-center mr-ml">
                                     Requirement Categories
                                 </span>
                             </a>
                         </li>
                         <li id="active-types" class="nav-item ">
-                            <a class="nav-link" href="{% url 'requirements:types' %}" >
+                            <a class="nav-link" href="{% url 'utilities:types' %}" >
                                 <span class="nav-link-title text-center mr-ml">
                                     Requirement Type
                                 </span>
@@ -88,9 +88,9 @@
             "{% url 'accounts:users' %}"            ,
             "{% url 'dashboard:dashboard' %}"       , 
             "{% url 'reports:reports' %}"           ,
-            "{% url 'requirements:categories' %}"   ,
+            "{% url 'utilities:categories' %}"   ,
             "{% url 'requirements:bin' %}"          ,
-            "{% url 'requirements:types' %}"        ,
+            "{% url 'utilities:types' %}"        ,
             "{% url 'monitoring:monitor' %}"        ,
             "{% url 'submissions:submission' %}"    ,
             "{% url 'utilities:roles' %}"           ,
@@ -108,13 +108,13 @@
                 else if (urlToCheck === "{% url 'reports:reports' %}") {
                     elementId = "active-reports";
                 }
-                else if (urlToCheck === "{% url 'requirements:categories' %}") {
+                else if (urlToCheck === "{% url 'utilities:categories' %}") {
                     elementId = "active-categories";
                 }
                 else if (urlToCheck === "{% url 'requirements:bin' %}") {
                     elementId = "active-bins";
                 }
-                else if (urlToCheck === "{% url 'requirements:types' %}") {
+                else if (urlToCheck === "{% url 'utilities:types' %}") {
                     elementId = "active-types";
                 }
                 else if (urlToCheck === "{% url 'submissions:submission' %}") {
@@ -142,13 +142,13 @@
                 else if (urlToCheck === "{% url 'reports:reports' %}") {
                     elementId = "active-reports";
                 }
-                else if (urlToCheck === "{% url 'requirements:categories' %}") {
+                else if (urlToCheck === "{% url 'utilities:categories' %}") {
                     elementId = "active-categories";
                 }
                 else if (urlToCheck === "{% url 'requirements:bin' %}") {
                     elementId = "active-bins";
                 }
-                else if (urlToCheck === "{% url 'requirements:types' %}") {
+                else if (urlToCheck === "{% url 'utilities:types' %}") {
                     elementId = "active-types";
                 }
                 else if (urlToCheck === "{% url 'submissions:submission' %}") {

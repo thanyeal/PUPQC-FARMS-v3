@@ -9,23 +9,7 @@ def req_bin(request):
     }
     return render(request, 'req_bin.html', context)
 
-def req_cat(request):
-    state = 'active'
-    serialized_state = json.dumps(state)
-    context = {
-        'requestz' : serialized_state , 
-    }
-    return render(request, 'req_cat.html', context)
-
-def req_typ(request):
-    state = 'active'
-    serialized_state = json.dumps(state)
-    context = {
-        'requestz' : serialized_state , 
-    }
-    return render(request, 'req_typ.html', context)
-
-def req_set(request):
+def req_setup(request):
     state = 'active'
     serialized_state = json.dumps(state)
     context = {

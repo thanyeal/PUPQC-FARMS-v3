@@ -1,0 +1,52 @@
+        {% comment %} Restore Modal  {% endcomment %}
+        <div class="modal modal-blur fade" id="modal-restore-type" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Restore a school year</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Dito yung slight explanation natin bakit kailangan ni user magrestore ng deleted types para lang magkaroon siya ng headstart sa pag-walk through sa module na ito.</p>
+                        <div class="mt-4 table-responsive">
+                            <table class="table card-table table-vcenter text-nowrap datatable">
+                                <thead>
+                                    <tr>
+                                    <th>
+                                        <input class="form-check-input m-0 align-middle" type="checkbox">
+                                    </th>
+                                    <th>Requirement Type</th>
+                                    <th>Date Deleted</th>
+                                    <th>Modified by</th>
+                                    <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <input class="form-check-input m-0 align-middle" type="checkbox">
+                                        </td>
+                                        <td>
+                                            Requirement Type No.1
+                                        </td>
+                                        <td>
+                                            May 22, 2024
+                                        </td>
+                                        <td>
+                                            Administrator
+                                        </td>
+                                        <td class="text-center">
+                                            <button class="btn align-text-top" data-bs-toggle="modal" data-bs-target="#modal-type-hdelete">Permanent Delete</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Restore</button>
+                    </div>
+                </div>
+            </div>
+        </div>

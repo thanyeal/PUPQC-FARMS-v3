@@ -16,3 +16,23 @@ def permissions_edit(request):
         'requestz' : serialized_state , 
     }
     return render(request, 'edit_utils.html', context)
+
+
+def req_cat(request):
+    state = 'active'
+    serialized_state = json.dumps(state)
+    context = {
+        'requestz' : serialized_state , 
+    }
+    return render(request, 'req_cat.html', context)
+
+def req_type(request):
+    state = 'active'
+    serialized_state = json.dumps(state)
+    context = {
+        'requestz' : serialized_state , 
+    }
+    return render(request, 'req_typ.html', context)
+
+
+

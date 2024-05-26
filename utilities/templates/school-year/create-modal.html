@@ -1,0 +1,33 @@
+        {% comment %} Create Modal  {% endcomment %}
+        <div class="modal modal-blur fade" id="modal-new-type" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="alert-primary" role="alert">
+                            <div class="d-flex">
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <circle cx="12" cy="12" r="9"></circle>
+                                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                        <polyline points="11 12 12 12 12 16 13 16"></polyline>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h5 class="modal-title">Create a School Year</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <span>Dito yung slight explanation natin bakit kailangan ni user gumawa ng reqs. types para lang magkaroon siya ng headstart sa pag-walk through sa module na ito.</span>
+                        <input type="text" class="mt-4 form-control" name="example-text-input" placeholder="Add new requirement type title">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
