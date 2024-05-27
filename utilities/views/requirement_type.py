@@ -12,12 +12,12 @@ from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_protect
 
 
-def main(request):
+def main(request, category_id):
     state = 'active'
     serialized_state = json.dumps(state)
     create_form = CreateRequirementType(request.POST or None)
-    records = RequirementType.objects.select_related('category').filter(is_deleted = False)
-    deleted_records = RequirementType.objects.select_related('category').filter(is_deleted = True)
+    records = RequirementType.objects.select_related('category').filter(is_deleted = False, category_id=category_id)
+    deleted_records = RequirementType.objects.select_related('category').filter(is_deleted = True, category_id=category_id)
 
     # Initialize an empty list to store update forms for each record
     details = []
@@ -41,14 +41,15 @@ def main(request):
 
 # @login_required
 @csrf_protect
-def create(request):
+def create(request, category_id):
     create_form = CreateRequirementType(request.POST or None)
     if create_form.is_valid():
         # create_form.instance.created_by = request.user
+        create_form.instance.category_id = category_id
         create_form.save()
 
         new_instance = create_form.save()
-        parent_id = new_instance.semester_id  # Get the IDcreate_form.save()
+        parent_id = new_instance.category_id  # Get the IDcreate_form.save()
 
         parent_record = RequirementCategory.objects.get(id=parent_id)
         parent_record.has_child_records = True
@@ -129,9 +130,9 @@ def soft_delete(request, pk):
         record.is_deleted=True
         record.save()
         messages.success(request, f'The record is successfully deleted!') 
-        return redirect('utilities:categories')
+        return redirect('utilities:requirement-type')
     except RequirementType.DoesNotExist:
-        return JsonResponse({'errors': 'Requirement Category record not found. Please try Again'}, status=404)
+        return JsonResponse({'errors': 'Requirement Type record not found. Please try Again'}, status=404)
 
 
 # @login_required
@@ -191,43 +192,43 @@ def hard_delete(request, pk):
     
 
 
-def hard_delete(request, pk):
-    if request.method == 'POST':
+# def hard_delete(request, pk):
+#     if request.method == 'POST':
 
-        # data = QueryDict(request.body.decode('utf-8'))
-        # entered_password = data.get('password')
-        # user = request.user
+#         # data = QueryDict(request.body.decode('utf-8'))
+#         # entered_password = data.get('password')
+#         # user = request.user
 
-        # if user and user.is_authenticated:
-        #     if authenticate(email=user.email, password=entered_password):
-                # Gets the records who have this ID
+#         # if user and user.is_authenticated:
+#         #     if authenticate(email=user.email, password=entered_password):
+#                 # Gets the records who have this ID
 
-        child_record = RequirementType.objects.filter(category_id = pk).exists() 
-        if child_record:
-            child_record_counts = RequirementType.objects.filter(category_id = pk).count()
-            return JsonResponse({'success': False, 'error': f'Unable to delete. This record has {child_record_counts} child records. To delete, first remove the child records.'})
+#         child_record = RequirementType.objects.filter(category_id = pk).exists() 
+#         if child_record:
+#             child_record_counts = RequirementType.objects.filter(category_id = pk).count()
+#             return JsonResponse({'success': False, 'error': f'Unable to delete. This record has {child_record_counts} child records. To delete, first remove the child records.'})
 
-        else:
-            category_record = RequirementCategory.objects.get(id=pk)
-            #After getting that record, this code will delete it.
-            parent_id = category_record.semester_id
-            category_record.delete()
+#         else:
+#             category_record = RequirementCategory.objects.get(id=pk)
+#             #After getting that record, this code will delete it.
+#             parent_id = category_record.semester_id
+#             category_record.delete()
 
-            # Check if the parent records has a child records
-            new_record = RequirementCategory.objects.filter(semester_id = parent_id).exists() 
+#             # Check if the parent records has a child records
+#             new_record = RequirementCategory.objects.filter(semester_id = parent_id).exists() 
 
-            # If there is no child record, then get the parent record and change the has_child_records to False
-            if new_record == False:
-                parent_record = Semester.objects.get(id = parent_id)
+#             # If there is no child record, then get the parent record and change the has_child_records to False
+#             if new_record == False:
+#                 parent_record = Semester.objects.get(id = parent_id)
 
-                parent_record.has_child_records = False
-                parent_record.save()
+#                 parent_record.has_child_records = False
+#                 parent_record.save()
 
-            messages.success(request, f'Requirement Category is permanently deleted!') 
-            return JsonResponse({'success': True}, status=200)
+#             messages.success(request, f'Requirement Category is permanently deleted!') 
+#             return JsonResponse({'success': True}, status=200)
     
-    else:
-        return JsonResponse({'success': False, 'error': 'Invalid request'})
+#     else:
+#         return JsonResponse({'success': False, 'error': 'Invalid request'})
 
 
 # def hard_delete(request, pk):

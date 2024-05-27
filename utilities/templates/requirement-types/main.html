@@ -63,6 +63,8 @@
     {% for record, update_form in details %}
         {% include "requirement-types/edit-modal.html" %}
         {% include "requirement-types/soft-delete-modal.html" %}
+
+        {% include "requirement-types/description-modal.html" %}
     {% endfor %}
 
 {% endblock modal_contents %}

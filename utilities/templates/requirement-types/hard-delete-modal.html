@@ -9,7 +9,7 @@
                         <h3>This action cannot be undone!</h3>
                         <div class="text-muted">Do you really want to permanently delete this record?</div>
 
-                    <form method="POST" action="/utilities/categories/hard-delete/{{ record.id }}/">
+                    <form method="POST" action="/utilities/requirement-type/hard-delete/{{ record.id }}/">
                         {% csrf_token %}
                     </div>
                     <div class="modal-footer">

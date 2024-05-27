@@ -68,6 +68,9 @@ class RequirementCategory(models.Model):
         db_table = 'FARMSRequirementCategory' 
         unique_together = ('title', 'semester')
 
+    def __str__(self):
+        return f"{self.semester.name} ({self.semester.school_year.name}) - {self.title}"
+
 
 class RequirementType(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

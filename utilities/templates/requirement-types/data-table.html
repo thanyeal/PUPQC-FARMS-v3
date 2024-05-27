@@ -36,15 +36,21 @@
                         {% for record, update_form in details%}
                             <tr class="small">
                                 <td>
-                                    {{ record.semester }}
+                                    {{ record.category }}
                                 </td>
 
                                 <td>
-                                    {{ record.title }}
+                                    {{ record.name }}
                                 </td>
 
                                 <td>
-                                    <a href="#" >Show Description</a>
+                                    {% if record.description %}
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#modal-description-{{record.id}}" >Show Description</a>
+                                    
+                                    {% else %}
+                                        <i>No Description</i>
+                                    
+                                    {% endif %}
                                 </td>
 
                                 <td>    

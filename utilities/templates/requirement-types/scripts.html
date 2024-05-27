@@ -6,7 +6,7 @@
             event.preventDefault();
 
             $.ajax({
-                url: "{% url 'utilities:categories-create' %}", 
+                url: "{% url 'utilities:requirement-type-create' %}", 
                 data: serializedData,
                 type: "POST",
                 success: function(response) {
@@ -44,7 +44,7 @@
             event.preventDefault();
             event.stopPropagation();
             var serializedData = $("#edit-form-"+id).serialize();
-            var url = "/utilities/categories/edit/"+id+"/";
+            var url = "/utilities/requirement-type/edit/"+id+"/";
     
             $.ajax({
                 url: url, 
@@ -98,7 +98,7 @@
             event.preventDefault();
 
             $.ajax({
-                url: "{% url 'utilities:categories-restore' %}", 
+                url: "{% url 'utilities:requirement-type-restore' %}", 
                 data: serializedData,
                 type: "POST",
                 success: function(response) {
@@ -125,3 +125,31 @@
         });
     });
 </script> 
+
+
+<script>
+    // @formatter:off
+    document.addEventListener("DOMContentLoaded", function () {
+    let options = {
+        selector: '#tinymce-mytextarea',
+        height: 300,
+        menubar: false,
+        statusbar: false,
+        plugins: [
+        'advlist autolink lists link image charmap print preview anchor',
+        'searchreplace visualblocks code fullscreen',
+        'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar: 'undo redo | formatselect | ' +
+        'bold italic backcolor | alignleft aligncenter ' +
+        'alignright alignjustify | bullist numlist outdent indent | ' +
+        'removeformat',
+    }
+    if (localStorage.getItem("tablerTheme") === 'dark') {
+        options.skin = 'oxide-dark';
+        options.content_css = 'dark';
+    }
+    tinyMCE.init(options);
+    })
+    // @formatter:on
+</script>   

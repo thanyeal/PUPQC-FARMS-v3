@@ -38,13 +38,13 @@ urlpatterns = [
     path('categories/hard-delete/<uuid:pk>/', requirement_category.hard_delete, name='categories-hard=delete'),
 
 
-            #--------------------------[ REQUIREMENT CATEGORIES  MODULE URLS ]--------------------------#
-    path('requirement-type/', requirement_type.main, name='requirement-type'),
-    path('requirement-type/create/', requirement_type.create, name='requirement-type-create'),
-    path('requirement-type/edit/<uuid:pk>/', requirement_type.edit, name='requirement-type-edit'),
-    path('requirement-type/soft-delete/<uuid:pk>/', requirement_type.soft_delete, name='requirement-type-soft-delete'),
-    path('requirement-type/restore/', requirement_type.restore, name='requirement-type-restore'),
-    path('requirement-type/hard-delete/<uuid:pk>/', requirement_type.hard_delete, name='requirement-type-hard=delete'),
+            #--------------------------[ REQUIREMENT TYPE  MODULE URLS ]--------------------------#
+    path('categories/requirement-type/<uuid:category_id>/', requirement_type.main, name='requirement-type'),
+    path('categories/requirement-type/create/', requirement_type.create, name='requirement-type-create'),
+    path('categories/requirement-type/edit/', requirement_type.edit, name='requirement-type-edit'),
+    path('categories/requirement-type/soft-delete/<uuid:category_id>/', requirement_type.soft_delete, name='requirement-type-soft-delete'),
+    path('categories/requirement-type/restore/', requirement_type.restore, name='requirement-type-restore'),
+    path('categories/requirement-type/hard-delete/<uuid:category_id>/', requirement_type.hard_delete, name='requirement-type-hard=delete'),
 
 
 

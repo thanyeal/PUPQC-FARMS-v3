@@ -34,7 +34,7 @@
                     </thead>
                     <tbody>
                         {% for record, update_form in details%}
-                            <tr class="small">
+                            <tr class="small"  onclick="window.location='{% url "utilities:requirement-type" category_id=record.id %}';">
                                 <td>
                                     {{ record.semester }}
                                 </td>

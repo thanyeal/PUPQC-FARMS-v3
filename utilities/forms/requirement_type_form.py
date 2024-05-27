@@ -6,8 +6,8 @@ from django.forms import ValidationError, modelformset_factory
 
 
 class CreateRequirementType(forms.ModelForm):
-    title = forms.CharField(
-        label = "Title", 
+    name = forms.CharField(
+        label = "Name", 
         required=True, 
         validators= [RegexValidator(r'^[a-zA-ZÁ-ÿ\s.,\'()&0-9\-/\\]*$', 
         message="Only Letters, Numbers, Decimal Point, Comma, Apostrophe, Ampersand, Parentheses, hyphen (-), forward slash (/), and backslash (\) are allowed in the Title Field!")],
@@ -21,18 +21,10 @@ class CreateRequirementType(forms.ModelForm):
         )
     
 
-    category = forms.ModelChoiceField(
-        label = "Semester", 
-        widget=forms.Select(attrs={'class': 'form-control'}), 
-        queryset=RequirementCategory.objects.filter(is_deleted=False), 
-        required=True, 
-        empty_label="Select a Semester",
-        error_messages={'required': "Please select a semester before adding a new requirement category."})
-
     
     class Meta:
-        model = RequirementCategory
-        fields = ('title', 'description','category')
+        model = RequirementType
+        fields = ('name', 'description')
 
 class EditRequirementType(forms.ModelForm):
     name = forms.CharField(
@@ -49,18 +41,10 @@ class EditRequirementType(forms.ModelForm):
         )
     
 
-    category = forms.ModelChoiceField(
-        label = "Semester", 
-        widget=forms.Select(attrs={'class': 'form-control'}), 
-        queryset=RequirementCategory.objects.filter(is_deleted=False), 
-        required=True, 
-        empty_label="Select a Semester",
-        error_messages={'required': "Please select a semester before adding a new requirement category."})
-
     
     class Meta:
         model = RequirementType
-        fields = ('name', 'description','category')
+        fields = ('name', 'description')
 
     
 
