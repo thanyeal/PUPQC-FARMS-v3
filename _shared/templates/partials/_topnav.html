@@ -34,7 +34,7 @@
                             </a>
                         </li>
                         <li id="active-types" class="nav-item ">
-                            <a class="nav-link" href="{% url 'utilities:types' %}" >
+                            <a class="nav-link" href="{% url 'utilities:requirement-type' %}" >
                                 <span class="nav-link-title text-center mr-ml">
                                     Requirement Type
                                 </span>
@@ -90,7 +90,7 @@
             "{% url 'reports:reports' %}"           ,
             "{% url 'utilities:categories' %}"   ,
             "{% url 'requirements:bin' %}"          ,
-            "{% url 'utilities:types' %}"        ,
+            "{% url 'utilities:requirement-type' %}"        ,
             "{% url 'monitoring:monitor' %}"        ,
             "{% url 'submissions:submission' %}"    ,
             "{% url 'utilities:roles' %}"           ,
@@ -114,7 +114,7 @@
                 else if (urlToCheck === "{% url 'requirements:bin' %}") {
                     elementId = "active-bins";
                 }
-                else if (urlToCheck === "{% url 'utilities:types' %}") {
+                else if (urlToCheck === "{% url 'utilities:requirement-type' %}") {
                     elementId = "active-types";
                 }
                 else if (urlToCheck === "{% url 'submissions:submission' %}") {
@@ -148,7 +148,7 @@
                 else if (urlToCheck === "{% url 'requirements:bin' %}") {
                     elementId = "active-bins";
                 }
-                else if (urlToCheck === "{% url 'utilities:types' %}") {
+                else if (urlToCheck === "{% url 'utilities:requirement-type' %}") {
                     elementId = "active-types";
                 }
                 else if (urlToCheck === "{% url 'submissions:submission' %}") {

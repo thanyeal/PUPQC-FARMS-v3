@@ -17,7 +17,7 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <h5 class="modal-title">Edit a Semester</h5>
+                                    <h5 class="modal-title">Edit a Requirement Category</h5>
                                 </div>
                             </div>
                         </div>
@@ -32,29 +32,21 @@
                         {% csrf_token %}
 
                         <div class="mb-3">
-                            <label class="form-label">School Year <small class="text-red">(Required)</small></label>
-                            {{ update_form.school_year }}
+                            <label class="form-label">Academic Term <small class="text-red">(Required)</small></label>
+                            {{update_form.semester }}
                         </div>
-
-                        
                     
                         <div class="mb-3">
-                            <label class="form-label">Name <small class="text-red">(Required)</small></label>
-                            {{ update_form.name }}
-                        </div>
-                        
-                        <div class="mb-3 row">
-                            <div class="col">
-                                <label class="form-label">Start Date <small class="text-red">(Required)</small></label>
-                                {{ update_form.start_date }}
-                            </div>
-    
-                            <div class="col">
-                                <label class="form-label">End Date <small class="text-red">(Required)</small></label>
-                                {{ update_form.end_date }}
-                            </div>
+                            <label class="form-label">Title <small class="text-red">(Required)</small></label>
+                            {{update_form.title }}
                         </div>
 
+                        <div class="mb-3">
+                            <label class="form-label">Description <small>(Optional)</small></label>
+                            <textarea id="tinymce-mytextarea" name="description" placeholder="Enter text here...">{{ update_form.description.value }}</textarea>
+                        </div>
+                        
+                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="close-{{ record.id }}" class="btn me-auto" data-bs-dismiss="modal">Close</button>

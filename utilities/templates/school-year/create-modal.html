@@ -1,7 +1,7 @@
 {% load crispy_forms_tags %}       
        
        {% comment %} Create Modal  {% endcomment %}
-        <div class="modal modal-blur fade" id="modal-new-type" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal modal-blur fade" id="modal-new-school-year" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <form 
                     autocomplete="off" 
@@ -30,18 +30,18 @@
                     <div class="modal-body">
                     
                         <div class="mb-3">
-                            <label class="form-label required">Name</label>
+                            <label class="form-label">Name  <small class="text-red">(Required)</small></label>
                             {{ create_form.name }}
                         </div>
                         
                         <div class="mb-3 row">
                             <div class="col">
-                                <label class="form-label required">Start Date</label>
+                                <label class="form-label">Start Date <small class="text-red">(Required)</small></label>
                                 {{ create_form.start_date }}
                             </div>
     
                             <div class="col">
-                                <label class="form-label required">End Date</label>
+                                <label class="form-label">End Date <small class="text-red">(Required)</small></label>
                                 {{ create_form.end_date }}
                             </div>
                         </div>

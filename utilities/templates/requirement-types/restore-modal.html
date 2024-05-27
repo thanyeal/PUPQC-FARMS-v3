@@ -1,0 +1,77 @@
+        {% comment %} Restore Modal  {% endcomment %}
+        <div class="modal modal-blur fade" id="modal-restore" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Restore a Requirement Category</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="restore-form">
+                            {% csrf_token %}
+                            <p>The records below was deleted. Restore it to regain access to its information.</p>
+                            <div class="mt-4 table-responsive">
+                            
+                                    <table class="table card-table table-vcenter text-nowrap datatable">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <input class="form-check-input m-0 align-middle" type="checkbox" id="select-all">
+                                                </th>
+                                                <th>Term</th>
+                                                <th>Title</th>
+                                                <th>Description</th>
+                                                <th>Modified by</th>
+                                                <th>Date Deleted</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            {% for record in deleted_records %}
+                                                <tr class="small">
+                                                    <td>
+                                                        <input name="selected_records" id="checkbox-{{ record.id }}" class="form-check-input m-0 align-middle" type="checkbox" value="{{record.id}}">
+                                                    </td>
+
+                                                    <td>
+                                                        {{ record.semester }}
+                                                    </td>
+                    
+                                                    <td>
+                                                        {{ record.title }}
+                                                    </td>
+                    
+                                                    <td>
+                                                        <a href="#" >Show Description</a>
+                                                    </td>
+                    
+                                                    <td>    
+                                                        Name of the User
+                                                    </td>
+                                                 
+                                                    <td>
+                                                        {{ record.deleted_at|date:"F j, Y" }}
+                                                    </td>
+
+                                                    <td class="text-center">
+                                                        <button type="button" class="btn align-text-top" data-bs-toggle="modal" data-bs-target="#modal-hard-delete-{{ record.id }}">Permanent Delete</button>
+                                                    </td>
+                                                </tr>
+
+                    
+                                            {% endfor %}
+                                        
+                                        </tbody>
+                                    </table>
+                        
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" id="restore-button" class="btn btn-primary">Restore</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>

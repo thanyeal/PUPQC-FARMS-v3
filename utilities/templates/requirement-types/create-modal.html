@@ -1,11 +1,15 @@
 {% load crispy_forms_tags %}       
        
        {% comment %} Create Modal  {% endcomment %}
-        <div class="modal modal-blur fade" id="modal-edit-{{ record.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal modal-blur fade" id="modal-new-category" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
- 
-                <div class="modal-header">
+                <form 
+                    autocomplete="off" 
+                    id="create-form"
+                    class="modal-content">
+                    {% csrf_token %}
+
+                    <div class="modal-header">
                         <div class="alert-primary" role="alert">
                             <div class="d-flex">
                                 <div>
@@ -17,54 +21,41 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <h5 class="modal-title">Edit a Semester</h5>
+                                    <h5 class="modal-title">Create a Requirement Types</h5>
                                 </div>
                             </div>
                         </div>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    
                     <div class="modal-body">
-                        <form autocomplete="off" 
-                        id="edit-form-{{ record.id }}"
-                        class="edit-form"
-                        data-id="{{ record.id }}">
-                        {% csrf_token %}
 
                         <div class="mb-3">
-                            <label class="form-label">School Year <small class="text-red">(Required)</small></label>
-                            {{ update_form.school_year }}
+                            <label class="form-label">Requirement Category<small class="text-red">(Required)</small></label>
+                            {{ create_form.category }}
                         </div>
 
                         
                     
                         <div class="mb-3">
                             <label class="form-label">Name <small class="text-red">(Required)</small></label>
-                            {{ update_form.name }}
+                            {{ create_form.name }}
                         </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Description <small>(Optional)</small></label>
+                            <textarea id="tinymce-mytextarea" name="description" placeholder="Enter text here..."></textarea>
+                        </div>
+
                         
-                        <div class="mb-3 row">
-                            <div class="col">
-                                <label class="form-label">Start Date <small class="text-red">(Required)</small></label>
-                                {{ update_form.start_date }}
-                            </div>
-    
-                            <div class="col">
-                                <label class="form-label">End Date <small class="text-red">(Required)</small></label>
-                                {{ update_form.end_date }}
-                            </div>
-                        </div>
+                        
+               
+
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="close-{{ record.id }}" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" id="save-changes-{{record.id}}" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" >Save</button>
                     </div>
                 </form>
-                </div>
             </div>
         </div>
-
-
-
-

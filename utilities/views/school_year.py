@@ -1,4 +1,4 @@
-from utilities.forms import CreateSchoolYear
+from utilities.forms.school_year_form import CreateSchoolYear
 from django.http import JsonResponse, QueryDict
 from django.shortcuts import redirect, render
 import json

@@ -1,7 +1,7 @@
 {% load crispy_forms_tags %}       
        
        {% comment %} Create Modal  {% endcomment %}
-        <div class="modal modal-blur fade" id="modal-new-semester" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal modal-blur fade" id="modal-description-{{record.id}}" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <form 
                     autocomplete="off" 
@@ -21,43 +21,29 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <h5 class="modal-title">Create a Semester</h5>
+                                    <h5 class="modal-title">Description</h5>
                                 </div>
                             </div>
                         </div>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-
-                        <div class="mb-3">
-                            <label class="form-label">School Year <small class="text-red">(Required)</small></label>
-                            {{ create_form.school_year }}
-                        </div>
-
-                        
                     
-                        <div class="mb-3">
-                            <label class="form-label">Name <small class="text-red">(Required)</small></label>
-                            {{ create_form.name }}
-                        </div>
-                        
-                        <div class="mb-3 row">
-                            <div class="col">
-                                <label class="form-label">Start Date <small class="text-red">(Required)</small></label>
-                                {{ create_form.start_date }}
-                            </div>
-    
-                            <div class="col">
-                                <label class="form-label">End Date <small class="text-red">(Required)</small></label>
-                                {{ create_form.end_date }}
-                            </div>
-                        </div>
+                        <div class="p-2">
+                            {% if record.description %}
+                                {{ record.description|safe }}
 
+                            {% else %}
+                                <div class="text-center">
+                                    <i>No Description</i>
+                                </div>
+                            {% endif %}
+                       
+                        </div>
 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" >Save</button>
                     </div>
                 </form>
             </div>

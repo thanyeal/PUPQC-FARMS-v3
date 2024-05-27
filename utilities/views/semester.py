@@ -1,6 +1,6 @@
 
 
-from utilities.forms import CreateSemester
+from utilities.forms.semester_form import CreateSemester
 from django.http import JsonResponse, QueryDict
 from django.shortcuts import redirect, render
 import json
@@ -104,6 +104,8 @@ def edit(request, pk):
     # Retrieve the type object with the given primary key (pk)
     try:
         record = Semester.objects.get(id=pk)
+        # Get the old parent ID
+        old_parent_id = record.school_year_id
     except Semester.DoesNotExist:
         return JsonResponse({'errors': 'School Year record not found. Please try Again'}, status=404)
 
@@ -116,15 +118,34 @@ def edit(request, pk):
             # Save the updated data to the database
             # update_form.instance.modified_by = request.user
 
-            parent_id = update_form.cleaned_data.get('school_year')
-            parent_record = SchoolYear.objects.get(id=parent_id)
-            parent_record.has_child_records = True
-            parent_record.save()
+    
+            new_instance = update_form.save()
+            new_parent_id = new_instance.school_year_id 
+            
+            
+            print(old_parent_id, '==', new_parent_id)             # After saving, get the new parent ID
 
-            update_form.save()
+            # CHECK IF THE PARENT IDS ARE NOT EQUAL
+            if old_parent_id != new_parent_id:
+                print('HINDI SILA EQUAL PARE')
+                parent_record = SchoolYear.objects.get(id=new_parent_id)
+                # Change the has_child_records of the new parent in to True
+                parent_record.has_child_records = True
+                parent_record.save()
+
+
+                # Query the database if there is a child record for the old parent record
+                is_have_child_records = Semester.objects.filter(school_year_id = old_parent_id).exists()
+
+                # Check if there is no child records existing
+                if is_have_child_records == False:
+                    old_parent_record = SchoolYear.objects.get(id=old_parent_id)    # Get the old parent record
+                    old_parent_record.has_child_records = False                     # Change it to False since there is no child records existing
+                    old_parent_record.save()                                        # Save it to the database
+                    
 
             # Provide a success message as a JSON response
-            messages.success(request, f'School year is successfully added!') 
+            messages.success(request, f'Semester is successfully updated!') 
             return JsonResponse({"status": "success"}, status=200)
 
         else:

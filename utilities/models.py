@@ -44,8 +44,8 @@ class Semester(models.Model):
         db_table = 'FARMSSemester' 
         unique_together = ('name', 'school_year')
 
-    # def __str__(self):
-    #     return '%s %s' % ('S.Y. ' + self.school_year.name, '-' + self.name)
+    def __str__(self):
+        return '%s %s' % ('S.Y. ' + self.school_year.name, '- ' + self.name)
 
 
 
@@ -66,12 +66,13 @@ class RequirementCategory(models.Model):
 
     class Meta:
         db_table = 'FARMSRequirementCategory' 
+        unique_together = ('title', 'semester')
 
 
 class RequirementType(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    category_id = models.ForeignKey(RequirementCategory, on_delete=models.CASCADE, related_name='requirementtype_category')
-    title = models.CharField(max_length=250, null=True, blank=True)
+    category = models.ForeignKey(RequirementCategory, on_delete=models.CASCADE, related_name='requirementtype_category')
+    name = models.CharField(max_length=250, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     # created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name='requirementtype_createdby', null=True, blank=True)
     created_at = models.DateTimeField(auto_now=True)
@@ -84,3 +85,5 @@ class RequirementType(models.Model):
 
     class Meta:
         db_table = 'FARMSRequirementType' 
+
+        unique_together = ('name', 'category')

@@ -7,10 +7,7 @@ app_name = 'utilities'
 urlpatterns = [
     path('', semester.permissions, name='roles'),
     path('permissions/', semester.permissions_edit, name='permissions'),
-    path('types', requirement_type.req_type, name='types'),
-    path('categories', requirement_category.req_cat, name='categories'),
-
-
+  
 
     #--------------------------[ SCHOOL YEAR  MODULE URLS ]--------------------------#
     path('school-year/', school_year.main, name='school-year-main'),
@@ -21,13 +18,33 @@ urlpatterns = [
     path('school-year/hard-delete/<uuid:pk>/', school_year.hard_delete, name='school-year-hard=delete'),
 
 
-    #--------------------------[ SCHOOL YEAR  MODULE URLS ]--------------------------#
+    #--------------------------[ SEMESTER  MODULE URLS ]--------------------------#
     path('semester/', semester.main, name='semester-main'),
     path('semester/create/', semester.create, name='semester-create'),
     path('semester/edit/<uuid:pk>/', semester.edit, name='semester-edit'),
     path('semester/soft-delete/<uuid:pk>/', semester.soft_delete, name='semester-soft-delete'),
     path('semester/restore/', semester.restore, name='semester-restore'),
     path('semester/hard-delete/<uuid:pk>/', semester.hard_delete, name='semester-hard=delete'),
+
+
+
+
+        #--------------------------[ REQUIREMENT CATEGORIES  MODULE URLS ]--------------------------#
+    path('categories/', requirement_category.main, name='categories'),
+    path('categories/create/', requirement_category.create, name='categories-create'),
+    path('categories/edit/<uuid:pk>/', requirement_category.edit, name='categories-edit'),
+    path('categories/soft-delete/<uuid:pk>/', requirement_category.soft_delete, name='categories-soft-delete'),
+    path('categories/restore/', requirement_category.restore, name='categories-restore'),
+    path('categories/hard-delete/<uuid:pk>/', requirement_category.hard_delete, name='categories-hard=delete'),
+
+
+            #--------------------------[ REQUIREMENT CATEGORIES  MODULE URLS ]--------------------------#
+    path('requirement-type/', requirement_type.main, name='requirement-type'),
+    path('requirement-type/create/', requirement_type.create, name='requirement-type-create'),
+    path('requirement-type/edit/<uuid:pk>/', requirement_type.edit, name='requirement-type-edit'),
+    path('requirement-type/soft-delete/<uuid:pk>/', requirement_type.soft_delete, name='requirement-type-soft-delete'),
+    path('requirement-type/restore/', requirement_type.restore, name='requirement-type-restore'),
+    path('requirement-type/hard-delete/<uuid:pk>/', requirement_type.hard_delete, name='requirement-type-hard=delete'),
 
 
 

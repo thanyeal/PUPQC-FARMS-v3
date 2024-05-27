@@ -1,6 +1,6 @@
 
 
-from utilities.forms import CreateSemester
+from utilities.forms.requirement_category_form import CreateRequirementCategory, EditRequirementCategory
 from django.http import JsonResponse, QueryDict
 from django.shortcuts import redirect, render
 import json
@@ -28,14 +28,6 @@ def permissions_edit(request):
     return render(request, 'edit_utils.html', context)
 
 
-def req_cat(request):
-    state = 'active'
-    serialized_state = json.dumps(state)
-    context = {
-        'requestz' : serialized_state , 
-    }
-    return render(request, 'req_cat.html', context)
-
 def req_type(request):
     state = 'active'
     serialized_state = json.dumps(state)
@@ -49,23 +41,19 @@ def req_type(request):
 def main(request):
     state = 'active'
     serialized_state = json.dumps(state)
-    create_form = CreateSemester(request.POST or None)
-    records = Semester.objects.select_related('school_year').filter(is_deleted = False)
-    deleted_records = Semester.objects.filter(is_deleted = True)
-
+    create_form = CreateRequirementCategory(request.POST or None)
+    records = RequirementCategory.objects.select_related('semester').filter(is_deleted = False)
+    deleted_records = RequirementCategory.objects.select_related('semester').filter(is_deleted = True)
 
     # Initialize an empty list to store update forms for each record
     details = []
 
     # Iterate through each record and create an update form for it
     for record in records:
-        update_form = CreateSemester(instance=record)
+        update_form = EditRequirementCategory(instance=record)
         # created_by = record.created_by  # Get the user who created the record
         # modified_by = record.modified_by  # Get the user who modified the record
         details.append((record, update_form))
-
-
-
 
     context = {
         'requestz' : serialized_state , 
@@ -74,17 +62,25 @@ def main(request):
         'details': details,
         'deleted_records': deleted_records,
     }
-    return render(request, 'semester/main.html', context)
+    return render(request, 'requirement-categories/main.html', context)
 
 
 # @login_required
 @csrf_protect
 def create(request):
-    create_form = CreateSemester(request.POST or None)
+    create_form = CreateRequirementCategory(request.POST or None)
     if create_form.is_valid():
         # create_form.instance.created_by = request.user
         create_form.save()
-        messages.success(request, f'New School Year is successfully added!') 
+
+        new_instance = create_form.save()
+        parent_id = new_instance.semester_id  # Get the IDcreate_form.save()
+
+        parent_record = Semester.objects.get(id=parent_id)
+        parent_record.has_child_records = True
+        parent_record.save()
+
+        messages.success(request, f'New Requirement Category is successfully added!') 
         return JsonResponse({'success': True }, status=200)
 
     else:
@@ -98,22 +94,49 @@ def create(request):
 def edit(request, pk):
     # Retrieve the type object with the given primary key (pk)
     try:
-        record = Semester.objects.get(id=pk)
-    except Semester.DoesNotExist:
-        return JsonResponse({'errors': 'School Year record not found. Please try Again'}, status=404)
+        record = RequirementCategory.objects.get(id=pk)
+        # Get the old parent ID
+        old_parent_id = record.semester_id
+    except RequirementCategory.DoesNotExist:
+        return JsonResponse({'errors': 'Requirement Category record not found. Please try Again'}, status=404)
 
     # Create an instance of the form with the type data
     # update_form = Create_Bodies_Form(instance=type)
     if request.method == 'POST':
         # Process the form submission with updated data
-        update_form = CreateSemester(request.POST or None, instance=record)
+        update_form = EditRequirementCategory(request.POST or None, instance=record)
         if update_form.is_valid():
             # Save the updated data to the database
             # update_form.instance.modified_by = request.user
-            update_form.save()
+
+    
+            new_instance = update_form.save()
+            new_parent_id = new_instance.semester_id 
+            
+            
+            print(old_parent_id, '==', new_parent_id)             # After saving, get the new parent ID
+
+            # CHECK IF THE PARENT IDS ARE NOT EQUAL
+            if old_parent_id != new_parent_id:
+                print('HINDI SILA EQUAL PARE')
+                parent_record = Semester.objects.get(id=new_parent_id)
+                # Change the has_child_records of the new parent in to True
+                parent_record.has_child_records = True
+                parent_record.save()
+
+
+                # Query the database if there is a child record for the old parent record
+                is_have_child_records = RequirementCategory.objects.filter(semester_id = old_parent_id).exists()
+
+                # Check if there is no child records existing
+                if is_have_child_records == False:
+                    old_parent_record = Semester.objects.get(id=old_parent_id)    # Get the old parent record
+                    old_parent_record.has_child_records = False                     # Change it to False since there is no child records existing
+                    old_parent_record.save()                                        # Save it to the database
+                    
 
             # Provide a success message as a JSON response
-            messages.success(request, f'School year is successfully added!') 
+            messages.success(request, f'Requirement Category is successfully updated!') 
             return JsonResponse({"status": "success"}, status=200)
 
         else:
@@ -125,16 +148,16 @@ def edit(request, pk):
 @csrf_protect
 def soft_delete(request, pk):
     try:
-        record = Semester.objects.get(id=pk)
+        record = RequirementCategory.objects.get(id=pk)
          #After getting that record, this code will delete it.
         # record.modified_by = request.user
         record.deleted_at = timezone.now()
         record.is_deleted=True
         record.save()
         messages.success(request, f'The record is successfully deleted!') 
-        return redirect('utilities:semester-main')
-    except Semester.DoesNotExist:
-        return JsonResponse({'errors': 'School Year record not found. Please try Again'}, status=404)
+        return redirect('utilities:categories')
+    except RequirementCategory.DoesNotExist:
+        return JsonResponse({'errors': 'Requirement Category record not found. Please try Again'}, status=404)
 
 
 # @login_required
@@ -146,12 +169,12 @@ def restore(request):
         if selected_record_ids:
             for record_id in selected_record_ids:
                 try:
-                    record = Semester.objects.get(pk=record_id)
+                    record = RequirementCategory.objects.get(pk=record_id)
                     record.is_deleted = False
                     record.deleted_at = None
                     # record.modified_by = request.user.id
                     record.save()
-                except Semester.DoesNotExist:
+                except RequirementCategory.DoesNotExist:
                     pass  # Handle cases where record might not exist
 
             messages.success(request, f'Deleted Records is successfully restored!') 
@@ -177,16 +200,56 @@ def hard_delete(request, pk):
                 # Gets the records who have this ID
             
 
-        child_record = Semester.objects.filter(school_year_id = pk).exists() 
+        # child_record = RequirementBin.objects.filter(category_id = pk).exists() 
+        # if child_record:
+        #     child_record_counts = RequirementBin.objects.filter(category_id = pk).count()
+        #     return JsonResponse({'success': False, 'error': f'Unable to delete. This record has {child_record_counts} child records. To delete, first remove the child records.'})
+
+        # else:
+        record = RequirementCategory.objects.get(id=pk)
+        #After getting that record, this code will delete it.
+        record.delete()
+        messages.success(request, f'Requirement Category is permanently deleted!') 
+        return JsonResponse({'success': True}, status=200)
+    
+    else:
+        return JsonResponse({'success': False, 'error': 'Invalid request'})
+    
+
+
+def hard_delete(request, pk):
+    if request.method == 'POST':
+
+        # data = QueryDict(request.body.decode('utf-8'))
+        # entered_password = data.get('password')
+        # user = request.user
+
+        # if user and user.is_authenticated:
+        #     if authenticate(email=user.email, password=entered_password):
+                # Gets the records who have this ID
+
+        child_record = RequirementType.objects.filter(category_id = pk).exists() 
         if child_record:
-            child_record_counts = RequirementCategory.objects.filter(school_year_id = pk).count()
+            child_record_counts = RequirementType.objects.filter(category_id = pk).count()
             return JsonResponse({'success': False, 'error': f'Unable to delete. This record has {child_record_counts} child records. To delete, first remove the child records.'})
 
         else:
-            record = Semester.objects.get(id=pk)
+            category_record = RequirementCategory.objects.get(id=pk)
             #After getting that record, this code will delete it.
-            record.delete()
-            messages.success(request, f'School Year is permanently deleted!') 
+            parent_id = category_record.semester_id
+            category_record.delete()
+
+            # Check if the parent records has a child records
+            new_record = RequirementCategory.objects.filter(semester_id = parent_id).exists() 
+
+            # If there is no child record, then get the parent record and change the has_child_records to False
+            if new_record == False:
+                parent_record = Semester.objects.get(id = parent_id)
+
+                parent_record.has_child_records = False
+                parent_record.save()
+
+            messages.success(request, f'Requirement Category is permanently deleted!') 
             return JsonResponse({'success': True}, status=200)
     
     else:
