@@ -5,7 +5,7 @@ from django.http import JsonResponse, QueryDict
 from django.shortcuts import redirect, render
 import json
 from django.contrib import messages
-from utilities.models import RequirementCategory, Semester
+from utilities.models import RequirementCategory, SchoolYear, Semester
 from utilities.views.semester import *
 from django.utils import timezone
 from django.contrib.auth import authenticate
@@ -83,7 +83,12 @@ def create(request):
     create_form = CreateSemester(request.POST or None)
     if create_form.is_valid():
         # create_form.instance.created_by = request.user
-        create_form.save()
+        new_instance = create_form.save()
+        parent_id = new_instance.school_year_id  # Get the IDcreate_form.save()
+
+        parent_record = SchoolYear.objects.get(id=parent_id)
+        parent_record.has_child_records = True
+        parent_record.save()
         messages.success(request, f'New School Year is successfully added!') 
         return JsonResponse({'success': True }, status=200)
 
@@ -110,6 +115,12 @@ def edit(request, pk):
         if update_form.is_valid():
             # Save the updated data to the database
             # update_form.instance.modified_by = request.user
+
+            parent_id = update_form.cleaned_data.get('school_year')
+            parent_record = SchoolYear.objects.get(id=parent_id)
+            parent_record.has_child_records = True
+            parent_record.save()
+
             update_form.save()
 
             # Provide a success message as a JSON response
@@ -175,18 +186,29 @@ def hard_delete(request, pk):
         # if user and user.is_authenticated:
         #     if authenticate(email=user.email, password=entered_password):
                 # Gets the records who have this ID
-            
 
-        child_record = Semester.objects.filter(school_year_id = pk).exists() 
+        child_record = RequirementCategory.objects.filter(semester_id = pk).exists() 
         if child_record:
-            child_record_counts = RequirementCategory.objects.filter(school_year_id = pk).count()
+            child_record_counts = RequirementCategory.objects.filter(semester_id = pk).count()
             return JsonResponse({'success': False, 'error': f'Unable to delete. This record has {child_record_counts} child records. To delete, first remove the child records.'})
 
         else:
-            record = Semester.objects.get(id=pk)
+            semester_record = Semester.objects.get(id=pk)
             #After getting that record, this code will delete it.
-            record.delete()
-            messages.success(request, f'School Year is permanently deleted!') 
+            parent_id = semester_record.school_year_id
+            semester_record.delete()
+
+            # Check if the parent records has a child records
+            new_record = Semester.objects.filter(school_year_id = parent_id).exists() 
+
+            # If there is no child record, then get the parent record and change the has_child_records to False
+            if new_record == False:
+                parent_record = SchoolYear.objects.get(id = parent_id)
+
+                parent_record.has_child_records = False
+                parent_record.save()
+
+            messages.success(request, f'Semester is permanently deleted!') 
             return JsonResponse({'success': True}, status=200)
     
     else:

@@ -13,6 +13,7 @@ class SchoolYear(models.Model):
     modified_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(auto_now=False, null=True, blank=True)
     is_deleted = models.BooleanField(default=False)
+    has_child_records = models.BooleanField(default=False)
 
     
     class Meta:
@@ -36,14 +37,15 @@ class Semester(models.Model):
     modified_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(auto_now=False, null=True, blank=True)
     is_deleted = models.BooleanField(default=False)
+    has_child_records = models.BooleanField(default=False)
 
     
     class Meta:
         db_table = 'FARMSSemester' 
         unique_together = ('name', 'school_year')
 
-    def __str__(self):
-        return '%s %s' % ('S.Y. ' + self.school_year.name, '-' + self.name)
+    # def __str__(self):
+    #     return '%s %s' % ('S.Y. ' + self.school_year.name, '-' + self.name)
 
 
 
@@ -59,6 +61,7 @@ class RequirementCategory(models.Model):
     modified_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(auto_now=False, null=True, blank=True)
     is_deleted = models.BooleanField(default=False)
+    has_child_records = models.BooleanField(default=False)
 
 
     class Meta:
@@ -76,6 +79,7 @@ class RequirementType(models.Model):
     modified_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(auto_now=False, null=True, blank=True)
     is_deleted = models.BooleanField(default=False)
+    has_child_records = models.BooleanField(default=False)
 
 
     class Meta:
