@@ -1,18 +1,18 @@
 from django.shortcuts import render
 import json
 
-def submissions_module(request):
+def permissions(request):
     state = 'active'
     serialized_state = json.dumps(state)
     context = {
         'requestz' : serialized_state , 
     }
-    return render(request, 'submissions.html', context)
+    return render(request, 'utilities.html', context)
 
-def submissions_list(request):
+def permissions_edit(request):
     state = 'active'
     serialized_state = json.dumps(state)
     context = {
         'requestz' : serialized_state , 
     }
-    return render(request, 'subm_listof.html', context)
+    return render(request, 'edit_utils.html', context)

@@ -26,20 +26,6 @@
                                 </span>
                             </a>
                         </li>
-                        <li id="active-categories" class="nav-item ">
-                            <a class="nav-link" href="{% url 'requirements:categories' %}" >
-                                <span class="nav-link-title text-center mr-ml">
-                                    Requirement Categories
-                                </span>
-                            </a>
-                        </li>
-                        <li id="active-types" class="nav-item ">
-                            <a class="nav-link" href="{% url 'requirements:types' %}" >
-                                <span class="nav-link-title text-center mr-ml">
-                                    Requirement Type
-                                </span>
-                            </a>
-                        </li>
                         <li id="active-bins" class="nav-item ">
                             <a class="nav-link" href="{% url 'requirements:bin' %}" >
                                 <span class="nav-link-title text-center mr-ml">
@@ -63,94 +49,90 @@
                         </li>
                         <li id="active-users" class="nav-item">
                             <a class="nav-link" href="{% url 'accounts:users' %}" >
-                            <span class="nav-link-title text-center mr-ml">
-                                Users
-                            </span>
+                                <span class="nav-link-title text-center mr-ml">
+                                    Users
+                                </span>
                             </a>
+                        </li>
+                        <li class="nav-item dropdown" id="active-utilities">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" >
+                                <span class="nav-link-title text-center mr-ml">
+                                    Utilities
+                                </span>
+                            </a>
+                            <div class="dropdown-menu">
+                                <div class="dropdown-menu-columns">
+                                    <div class="dropdown-menu-column">
+                                        <a class="dropdown-item" href="#">
+                                            Academic Year & Semester
+                                        </a>
+                                        <a class="dropdown-item" href="{% url 'requirements:categories' %}" id="active-categories">
+                                            Requirement Categories
+                                        </a>
+                                        <a class="dropdown-item" href="{% url 'requirements:types' %}" id="active-types">
+                                            Requirement Type
+                                        </a>
+                                        <a class="dropdown-item" href="{% url 'utilities:roles' %}" id="active-util">
+                                            Permissions
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
-
-
     <script>
         var active_request = JSON.parse('{{ requestz|safe }}');
         var currentURL = window.location.href;
+    
         var urlsToCheck = [
-            "{% url 'accounts:users' %}"            ,
-            "{% url 'dashboard:dashboard' %}"       , 
-            "{% url 'reports:reports' %}"           ,
-            "{% url 'requirements:categories' %}"   ,
-            "{% url 'requirements:bin' %}"          ,
-            "{% url 'requirements:types' %}"        ,
-            "{% url 'monitoring:monitor' %}"        ,
-            "{% url 'submissions:submission' %}"
+            {"url": "{% url 'accounts:users' %}",           "ids": ["active-users"]},
+            {"url": "{% url 'accounts:profile' %}",         "ids": ["active-users-profile"]},  // Added profile URL
+            {"url": "{% url 'dashboard:dashboard' %}",      "ids": ["active-dashboard"]},
+            {"url": "{% url 'reports:reports' %}",          "ids": ["active-reports"]},
+            {"url": "{% url 'requirements:categories' %}",  "ids": ["active-categories"]},
+            {"url": "{% url 'requirements:bin' %}",         "ids": ["active-bins"]},
+            {"url": "{% url 'requirements:types' %}",       "ids": ["active-types"]},
+            {"url": "{% url 'submissions:submission' %}",   "ids": ["active-subm"]},
+            {"url": "{% url 'utilities:roles' %}",          "ids": ["active-util"]}
         ];
     
-        urlsToCheck.forEach(function(urlToCheck) {
-            var elementId = "";
-            if (currentURL.includes(urlToCheck)) {
-                if (urlToCheck === "{% url 'accounts:users' %}") {
-                    elementId = "active-users";
-                } 
-                else if (urlToCheck === "{% url 'dashboard:dashboard' %}") {
-                    elementId = "active-dashboard";
-                }
-                else if (urlToCheck === "{% url 'reports:reports' %}") {
-                    elementId = "active-reports";
-                }
-                else if (urlToCheck === "{% url 'requirements:categories' %}") {
-                    elementId = "active-categories";
-                }
-                else if (urlToCheck === "{% url 'requirements:bin' %}") {
-                    elementId = "active-bins";
-                }
-                else if (urlToCheck === "{% url 'requirements:types' %}") {
-                    elementId = "active-types";
-                }
-                else if (urlToCheck === "{% url 'submissions:submission' %}") {
-                    elementId = "active-subm";
-                }
+        var utilitiesUrls = [
+            "{% url 'requirements:categories' %}",
+            "{% url 'requirements:types' %}",
+            "{% url 'utilities:roles' %}"
+        ];
     
+        urlsToCheck.forEach(function(item) {
+            var isCurrentURL = currentURL.includes(item.url);
+            item.ids.forEach(function(elementId) {
                 var element = document.getElementById(elementId);
                 if (element) {
-                    if (!element.classList.contains(active_request)) {
+                    if (isCurrentURL) {
                         element.classList.add(active_request);
-                    }
-                }
-            } 
-            
-            else {
-                if (urlToCheck === "{% url 'accounts:users' %}") {
-                    elementId = "active-users";
-                } 
-                else if (urlToCheck === "{% url 'dashboard:dashboard' %}") {
-                    elementId = "active-dashboard";
-                }
-                else if (urlToCheck === "{% url 'reports:reports' %}") {
-                    elementId = "active-reports";
-                }
-                else if (urlToCheck === "{% url 'requirements:categories' %}") {
-                    elementId = "active-categories";
-                }
-                else if (urlToCheck === "{% url 'requirements:bin' %}") {
-                    elementId = "active-bins";
-                }
-                else if (urlToCheck === "{% url 'requirements:types' %}") {
-                    elementId = "active-types";
-                }
-                else if (urlToCheck === "{% url 'submissions:submission' %}") {
-                    elementId = "active-subm";
-                }
-    
-                var element = document.getElementById(elementId);
-                if (element) {
-                    if (element.classList.contains(active_request)) {
+                    } else {
                         element.classList.remove(active_request);
                     }
                 }
-            }
+            });
         });
+    
+        var utilitiesElement = document.getElementById("active-utilities");
+        var utilitiesActive = utilitiesUrls.some(function(url) {
+            return currentURL.includes(url);
+        });
+    
+        if (utilitiesElement) {
+            if (utilitiesActive) {
+                utilitiesElement.classList.add('active');
+            } 
+            else {
+                utilitiesElement.classList.remove('active');
+            }
+        }
     </script>
+    
+    

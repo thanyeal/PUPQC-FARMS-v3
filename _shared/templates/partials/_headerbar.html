@@ -19,8 +19,9 @@
                     </div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <a href="#" class="dropdown-item">Profile</a>
-                    <a href="#" class="dropdown-item">Logout</a>
+                    <a href="{% url 'accounts:profile' %}" class="dropdown-item" id="active-users-profile">Profile</a>
+                    <a href="{% url 'login' %}" class="dropdown-item">Logout</a>
+                    <a href="#" class="dropdown-item">Switch account to: Faculty</a>
                 </div>
             </div>
         </div>

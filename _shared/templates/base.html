@@ -2,33 +2,30 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
         <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+        <link rel="icon" href="{% static 'img/pupqcfaculty.png' %}">
         <title>myPUPQC-FARMS</title>
         {% include 'partials/_cssdep.html' %}
     </head>
-
-    <body>
-        <style>
-            body {
-                font-family: 'Figtree';
-            }
-        </style>
-
+    <body style="font-family: 'Figtree' !important">
         <div class="page">
-            <section>
+            <navbar>
                 {% include 'partials/_headerbar.html' %}
-            </section>
-            <div>
+            </navbar>
+            <navbar>
                 {% include 'partials/_topnav.html' %}
-            </div>
+            </navbar>
             {% block content %}{% endblock %}
+            {% include 'partials/_alerts.html' %}
             {% include 'partials/_footer.html' %}
         </div>
+        <button onclick="topFunction()" class="btn btn-primary btn-icon fade-on-scroll" id="back-to-top">
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-up"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M18 11l-6 -6" /><path d="M6 11l6 -6" /></svg>
+        </button>
     </body>
-
     {% include 'partials/_jvsdep.html' %}
+    </script>
 </html>
