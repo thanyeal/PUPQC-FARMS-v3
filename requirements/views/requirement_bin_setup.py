@@ -5,171 +5,121 @@ from django.http import JsonResponse, QueryDict
 from django.shortcuts import redirect, render
 import json
 from django.contrib import messages
+from utilities.forms.requirement_type_form import EditRequirementType
 from utilities.models import RequirementCategory, RequirementType
-from requirements.models import RequirementBin, RequirementBinContent
+from requirements.models import RequirementBin, RequirementBinContent, UserRequirementUpload
 from django.utils import timezone
 from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_protect
 
 
-def main(request):
+def main(request, requirement_bin_id):
     state = 'active'
     serialized_state = json.dumps(state)
-    create_form = CreateRequirementBin(request.POST or None)
-    records = RequirementBin.objects.select_related('category').filter(is_deleted = False)
-    deleted_records = RequirementBin.objects.select_related('category').filter(is_deleted = True)
+    records = RequirementBinContent.objects.select_related('requirement_bin').filter(is_deleted = False)
+    deleted_records = RequirementBinContent.objects.select_related('requirement_type', 'requirement_bin').filter(is_deleted = True)
+    requirement_bin = RequirementBin.objects.select_related('category').get(id=requirement_bin_id)
+    categort_id = requirement_bin.category_id
+    requirement_types = RequirementType.objects.select_related('category').filter(is_deleted=False, is_assigned_to_bin=False, category_id=categort_id)
 
-    # Initialize an empty list to store update forms for each record
     details = []
-
-    # Iterate through each record and create an update form for it
+     # Iterate through each record and create an update form for it
     for record in records:
-        update_form = EditRequirementBin(instance=record)
+        update_form = EditRequirementType(instance=record)
         # created_by = record.created_by  # Get the user who created the record
         # modified_by = record.modified_by  # Get the user who modified the record
         details.append((record, update_form))
 
+
     context = {
         'requestz' : serialized_state , 
-        'create_form': create_form,
         'records': records,
-        'details': details,
         'deleted_records': deleted_records,
+        'requirement_bin': requirement_bin,
+        'requirement_bin_id': requirement_bin_id,
+        'requirement_types': requirement_types,
+        'details': details,
     }
-    return render(request, 'requirement-bins/main.html', context)
+    return render(request, 'requirement-bins-setup/main.html', context)
 
 
 # @login_required
 @csrf_protect
-def create(request):
-    create_form = CreateRequirementBin(request.POST or None)
-    if create_form.is_valid():
+def create(request, requirement_bin_id):
+    if request.method == "POST":
+        selected_record_ids = request.POST.getlist('selected_records')
 
-        create_form.instance.status = 'ongoing'
+        print('THE ID OF THE REQUIREMENT BIN: ' ,requirement_bin_id)
 
-        new_instance = create_form.save()
-        category_id = new_instance.category_id  # Get the IDcreate_form.save()
-        requirement_bin_id = new_instance.id  # Get the IDcreate_form.save()
+        if selected_record_ids:
+            for record_id in selected_record_ids:
+                requirement_type = RequirementType.objects.get(id=record_id)
+                requirement_type.is_assigned_to_bin  = True
+                requirement_type.save()
 
-        parent_record = RequirementCategory.objects.get(id=category_id)
-        parent_record.has_child_records = True
-        parent_record.save()
-
-
-        requirement_types_exist = RequirementType.objects.filter(category_id = category_id, is_deleted=False).exists()
-        if requirement_types_exist:
-            requirement_types = RequirementType.objects.filter(category_id = category_id, is_deleted=False)
-
-            for record in requirement_types:
-                record.is_assigned_to_bin = True
-                record.save()
                 RequirementBinContent.objects.create(
-                    requirement_type_id = record.id,
                     requirement_bin_id = requirement_bin_id,
-                    # created_by = request.user
+                    requirement_type_id = record_id,
+                    # created_by = request.user,
                 )
 
-        messages.success(request, f'The Requirement Bin is has been added!') 
-        return JsonResponse({'success': True }, status=200)
+                # Get the Requirement Bin record, this record is the parent record of the newly created record
+                parent_record = RequirementBin.objects.get(id=requirement_bin_id)
+                parent_record.has_child_records = True                              #Mark this as True since we created a child record, it only indicates that this record has child records
+                parent_record.save()                                                #Save it to the database
 
-    else:
-        # Return a validation error using a JSON response
-        return JsonResponse({'errors': create_form.errors}, status=400)
+
+            messages.success(request, f'Requirement Types is successfully added!') 
+            return JsonResponse({"status": "success"}, status=200)
+        else:
+            return JsonResponse({'error': 'There is nothing to add. Please select a requirement type before clicking the add button.'}, status=404)
     
 
 
 # @login_required
 @csrf_protect
-def edit(request):
-    if request.method == "POST":
-        pk = request.POST.get('primary-key')  
-        # Retrieve the type object with the given primary key (pk)
-        try:
-            record = RequirementBin.objects.get(id=pk)
-            # Get the old parent ID
-            old_parent_id = record.category_id
-        except RequirementBin.DoesNotExist:
-            return JsonResponse({'errors': 'Requirement Bin record not found. Please try Again'}, status=404)
-
-        # Create an instance of the form with the type data
-        # update_form = Create_Bodies_Form(instance=type)
-        if request.method == 'POST':
-            # Process the form submission with updated data
-            update_form = EditRequirementBin(request.POST or None, instance=record)
-            if update_form.is_valid():
-                # Save the updated data to the database
-                # update_form.instance.modified_by = request.user
-
-        
-                new_instance = update_form.save()
-                new_parent_id = new_instance.category_id 
-                
-                
-                print(old_parent_id, '==', new_parent_id)             # After saving, get the new parent ID
-
-                # CHECK IF THE PARENT IDS ARE NOT EQUAL
-                if old_parent_id != new_parent_id:
-                    print('HINDI SILA EQUAL PARE')
-                    parent_record = RequirementCategory.objects.get(id=new_parent_id)
-                    # Change the has_child_records of the new parent in to True
-                    parent_record.has_child_records = True
-                    parent_record.save()
-
-
-                    # Query the database if there is a child record for the old parent record
-                    is_have_child_records = RequirementBin.objects.filter(category_id = old_parent_id).exists()
-
-                    # Check if there is no child records existing
-                    if is_have_child_records == False:
-                        old_parent_record = RequirementCategory.objects.get(id=old_parent_id)    # Get the old parent record
-                        old_parent_record.has_child_records = False                     # Change it to False since there is no child records existing
-                        old_parent_record.save()                                        # Save it to the database
-                        
-
-                # Provide a success message as a JSON response
-                messages.success(request, f'The Requirement Bin is successfully edited!') 
-                return JsonResponse({"status": "success"}, status=200)
-
-            else:
-                # Return a validation error as a JSON response
-                return JsonResponse({'errors': update_form.errors}, status=400)
-        
-
-# @login_required
-@csrf_protect
 def soft_delete(request):
     if request.method == "POST":
-        pk = request.POST.get('primary-key')  
-
+        pk = request.POST.get('primary-key')   
         try:
-            record = RequirementBin.objects.get(id=pk)
-            category_id = record.category_id
+            record = RequirementBinContent.objects.get(id=pk)
+
             #After getting that record, this code will delete it.
             # record.modified_by = request.user
             record.deleted_at = timezone.now()
             record.is_deleted=True
+
+            #Get the foreign ids of the parent tables
+            requirement_bin_id = record.requirement_bin_id    
+
+            print(requirement_bin_id)  
+  
+                                            
+              #Save it to the database
             record.save()
-            messages.success(request, f'The record is successfully deleted!') 
-            return redirect('requirements:requirement-bin')
+       
+
+            messages.success(request, f'The requirement type is successfully removed from the list!') 
+            return redirect('requirements:requirement-bin-setup', requirement_bin_id)
         except RequirementBin.DoesNotExist:
-            return JsonResponse({'errors': 'Requirement Bin record not found. Please try Again'}, status=404)
+            return JsonResponse({'errors': 'Requirement record not found. Please try again.'}, status=404)
 
 
 # @login_required
 @csrf_protect
 def restore(request):
     if request.method == 'POST':
-        selected_record_ids = request.POST.getlist('selected_records')  
+        selected_record_ids = request.POST.getlist('selected_deleted_records')  
 
         if selected_record_ids:
             for record_id in selected_record_ids:
                 try:
-                    record = RequirementBin.objects.get(pk=record_id)
+                    record = RequirementBinContent.objects.get(pk=record_id)
                     record.is_deleted = False
                     record.deleted_at = None
                     # record.modified_by = request.user.id
                     record.save()
-                except RequirementBin.DoesNotExist:
+                except RequirementBinContent.DoesNotExist:
                     pass  # Handle cases where record might not exist
 
             messages.success(request, f'Deleted Records is successfully restored!') 
@@ -197,16 +147,40 @@ def hard_delete(request):
                 # Gets the records who have this ID
             
 
-        # child_record = RequirementBin.objects.filter(category_id = pk).exists() 
-        # if child_record:
-        #     child_record_counts = RequirementBin.objects.filter(category_id = pk).count()
-        #     return JsonResponse({'success': False, 'error': f'Unable to delete. This record has {child_record_counts} child records. To delete, first remove the child records.'})
+        child_record = UserRequirementUpload.objects.filter(requirement_bin_content_id = pk).exists() 
+        if child_record:
+            child_record_counts = UserRequirementUpload.objects.filter(requirement_bin_content_id = pk)
+            return JsonResponse({'success': False, 'error': f'Unable to delete. This record has {child_record_counts} child records. To delete, first remove the child records.'})
 
         # else:
-        record = RequirementBin.objects.get(id=pk)
-        #After getting that record, this code will delete it.
-        record.delete()
-        messages.success(request, f'The Requirement Bin is permanently deleted!') 
+        record = RequirementBinContent.objects.get(id=pk) #Get the record using the value of the pk
+        requirement_bin_id = record.requirement_bin_id #Get the requirement bin id from the record
+        requirement_type_id = record.requirement_type_id
+        record.delete() #After getting that record, this code will delete it.
+
+
+        # Check if there are existing child records referenced to the requirement bin record
+        requirement_bin_content_exist = RequirementBinContent.objects.filter(requirement_bin_id = requirement_bin_id).exists()
+
+        if requirement_bin_content_exist == False:                                  #If there is no exising child records, run the below codes
+            requirement_bin = RequirementBin.objects.get(id=requirement_bin_id)     #Get the requirement bin record using the requirement_bin_id
+            requirement_bin.has_child_records = False                               #Mark the has_child_records to False since it has no child records
+            requirement_bin.save()                                                  #Save it to the database
+
+
+        # Reinitialized the variable to none
+        requirement_bin_content_exist = None
+
+        # Check if there are existing child records referenced to the requirement type record
+        requirement_bin_content_exist = RequirementBinContent.objects.filter(requirement_type_id = requirement_type_id).exists()
+
+        if requirement_bin_content_exist == False:                                  #If there is no exising child records, run the below codes
+            requirement_type = RequirementType.objects.get(id=requirement_type_id)  #Get the requirement type record using the requirement_bin_id
+            requirement_type.has_child_records = False                              #Mark the has_child_records to False since it has no child records
+            requirement_type.is_assigned_to_bin  = False                            #Mark the is_assigned_to_bin to False since it is no longer assigned to the requirement bin
+            requirement_type.save()                                                 #Save it to the database
+
+        messages.success(request, f'The Requirement Type is permanently deleted!') 
         return JsonResponse({'success': True}, status=200)
     
     else:

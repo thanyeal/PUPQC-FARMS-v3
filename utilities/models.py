@@ -65,7 +65,7 @@ class RequirementCategory(models.Model):
 
 
     class Meta:
-        db_table = 'FARMSRequirementCategory' 
+        db_table = 'FARMSReqCategory' 
         unique_together = ('title', 'semester')
 
     def __str__(self):
@@ -84,9 +84,10 @@ class RequirementType(models.Model):
     deleted_at = models.DateTimeField(auto_now=False, null=True, blank=True)
     is_deleted = models.BooleanField(default=False)
     has_child_records = models.BooleanField(default=False)
+    is_assigned_to_bin = models.BooleanField(default=False)
 
 
     class Meta:
-        db_table = 'FARMSRequirementType' 
+        db_table = 'FARMSReqType' 
 
         unique_together = ('name', 'category')

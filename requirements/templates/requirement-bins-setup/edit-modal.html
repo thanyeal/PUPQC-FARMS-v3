@@ -17,7 +17,7 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <h5 class="modal-title">Edit a Requirement Bin</h5>
+                                    <h5 class="modal-title">Edit a Requirement Type</h5>
                                 </div>
                             </div>
                         </div>
@@ -26,48 +26,27 @@
                     
                     <div class="modal-body">
                         <form autocomplete="off" 
-                        id="edit-form-{{ record.id }}"
+                        id="edit-form-{{ record.requirement_type.id }}"
                         class="edit-form"
-                        data-id="{{ record.id }}">
+                        data-id="{{ record.requirement_type.id }}">
                         {% csrf_token %}
 
-
-                        <input type='hidden' name="primary-key" value="{{ record.id }}">
-
                         <div class="mb-3">
-                            <label class="form-label">Requirement Category <small class="text-red">(Required)</small></label>
-                            {{ update_form.category }}
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Title <small class="text-red">(Required)</small></label>
-                            {{ update_form.name }}
-                        </div>
-
-                        <div class="mb-3 row">
-                           
-                            <div class="col">
-                                <label class="form-label">Status <small class="text-red">(Required)</small></label>
-                                {{ update_form.status }}
-                            </div>
-
-                            <div class="col">
-                                <label class="form-label">Deadline <small class="text-red">(Required)</small></label>
-                                {{ update_form.deadline }}
-                            </div>
-
+                            <label class="form-label">Name <small class="text-red">(Required)</small></label>
+                            <input type="text" name="name" class="form-control required" required="" id="id_name" value="{{ record.requirement_type.name }}">
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Description <small>(Optional)</small></label>
-                            <textarea id="tinymce-mytextarea" name="description" placeholder="Enter text here...">{{update_form.description.value}}</textarea>
+                            <textarea id="tinymce-mytextarea" name="description" placeholder="Enter text here...">{{ record.requirement_type.description }}</textarea>
                         </div>
 
+                        
                         
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="close-{{ record.id }}" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" id="save-changes-{{record.id}}" class="btn btn-primary">Save changes</button>
+                        <button type="submit" id="save-changes-{{record.id}}" class="btn btn-primary">Save</button>
                     </div>
                 </form>
                 </div>

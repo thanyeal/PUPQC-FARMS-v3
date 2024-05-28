@@ -16,7 +16,7 @@
                                         <thead>
                                             <tr>
                                                 <th>
-                                                    <input class="form-check-input m-0 align-middle" type="checkbox" id="select-all">
+                                                    <input class="form-check-input m-0 align-middle" type="checkbox" id="select-deleted-all">
                                                 </th>
                                                 <th>Title</th>
                                                 <th>Description</th>
@@ -30,14 +30,14 @@
                                             {% for record in deleted_records %}
                                                 <tr class="small">
                                                     <td>
-                                                        <input name="selected_records" id="checkbox-{{ record.id }}" class="form-check-input m-0 align-middle" type="checkbox" value="{{record.id}}">
+                                                        <input name="selected_deleted_records" id="checkbox-{{ record.id }}" class="form-check-input m-0 align-middle" type="checkbox" value="{{record.id}}">
                                                     </td>
                                                     <td>
-                                                        {{ record.name }}
+                                                        {{ record.requirement_type.name }}
                                                     </td>
                     
                                                     <td>
-                                                        {% if record.description %}
+                                                        {% if record.requirement_type.description %}
                                                             <a href="#" data-bs-toggle="modal" data-bs-target="#modal-description-{{record.id}}" >Show Description</a>
                                                         
                                                         {% else %}

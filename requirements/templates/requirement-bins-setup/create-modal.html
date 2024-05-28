@@ -2,7 +2,7 @@
        
        {% comment %} Create Modal  {% endcomment %}
         <div class="modal modal-blur fade" id="modal-new-category" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
                 <form 
                     autocomplete="off" 
                     id="create-form"
@@ -21,39 +21,74 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <h5 class="modal-title">Post New Requirement Bin</h5>
+                                    <h5 class="modal-title">Add new Requirement Types</h5>
                                 </div>
                             </div>
                         </div>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+
+                        <input type="hidden" name"requirement_bin_id" value="{{ requirement_bin_id }}">
                     
-                        <div class="mb-3">
-                            <label class="form-label">Requirement Category <small class="text-red">(Required)</small></label>
-                            {{ create_form.category }}
-                        </div>
+                        <p>Please select the requirement types that you wanted to add in the requirement bin.</p>
+                        <div class="mt-4 table-responsive">
+                        
+                            <table class="table card-table table-vcenter text-nowrap datatable">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <input class="form-check-input m-0 align-middle" type="checkbox" id="select-all">
+                                        </th>
+                                        <th>Title</th>
+                                        <th>Description</th>
+                                        <th>Modified by</th>
+                                        <th>Last Modified</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                        <div class="mb-3">
-                            <label class="form-label">Title <small class="text-red">(Required)</small></label>
-                            {{ create_form.name }}
-                        </div>
+                                    {% for record in requirement_types %}
+                                        <tr class="small">
+                                            <td>
+                                                <input name="selected_records" id="checkbox-{{ record.id }}" class="form-check-input m-0 align-middle" type="checkbox" value="{{record.id}}">
+                                            </td>
+                                            <td>
+                                                {{ record.name }}
+                                            </td>
+            
+                                            <td>
+                                                {% if record.description %}
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modal-description-{{record.id}}" >Show Description</a>
+                                                
+                                                {% else %}
+                                                    <i>No Description</i>
+                                                
+                                                {% endif %}
+                                            </td>
+            
+                                            <td>    
+                                                Name of the User
+                                            </td>
+                                            
+                                            <td>
+                                                {{ record.modified_at|date:"F j, Y" }}
+                                            </td>
 
-                        <div class="mb-3">
-                            <label class="form-label">Deadline <small class="text-red">(Required)</small></label>
-                            {{ create_form.deadline }}
-                        </div>
+                                        </tr>
 
-                        <div class="mb-3">
-                            <label class="form-label">Description <small>(Optional)</small></label>
-                            <textarea id="tinymce-mytextarea" name="description" placeholder="Enter text here..."></textarea>
+            
+                                    {% endfor %}
+                                
+                                </tbody>
+                            </table>
+                    
                         </div>
-
 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" >Post</button>
+                        <button type="submit" id="requirement-button-submit" class="btn btn-primary" >Add Requirements</button>
                     </div>
                 </form>
             </div>

@@ -3,10 +3,12 @@
 
         $("#create-form").submit(function(event) {
             var serializedData = $("#create-form").serialize();
+            var url = "/requirements/requirement-bin/setup/create/"+'{{ requirement_bin_id }}'+"/";
+     
             event.preventDefault();
 
             $.ajax({
-                url: "{% url 'requirements:requirement-bin-create' %}", 
+                url: url, 
                 data: serializedData,
                 type: "POST",
                 success: function(response) {
@@ -44,10 +46,10 @@
             event.preventDefault();
             event.stopPropagation();
             var serializedData = $("#edit-form-"+id).serialize();
-
+            var url = "/utilities/categories/requirement-type/edit/"+id+"/";
     
             $.ajax({
-                url: "{% url 'requirements:requirement-bin-edit' %}", 
+                url: url, 
                 data: serializedData,
                 headers: { 'X-CSRFToken': '{{ csrf_token }}' }, 
                 type: "POST",
@@ -91,6 +93,18 @@
 
 
   <script>
+    const selectAllCheckboxDeleted = document.getElementById("select-deleted-all");
+    const DeletedrecordCheckboxes = document.querySelectorAll('input[name="selected_deleted_records"]');
+  
+    selectAllCheckboxDeleted.addEventListener('change', function() {
+      DeletedrecordCheckboxes.forEach(checkbox => {
+        checkbox.checked = selectAllCheckboxDeleted.checked;
+      });
+    });
+  </script>
+
+
+  <script>
     $(document).ready(function(){
 
         $("#restore-form").submit(function(event) {
@@ -98,7 +112,7 @@
             event.preventDefault();
 
             $.ajax({
-                url: "{% url 'requirements:requirement-bin-restore' %}", 
+                url: "{% url 'requirements:requirement-bin-setup-restore' %}", 
                 data: serializedData,
                 type: "POST",
                 success: function(response) {
