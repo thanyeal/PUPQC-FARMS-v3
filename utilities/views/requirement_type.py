@@ -18,6 +18,7 @@ def main(request, category_id):
     create_form = CreateRequirementType(request.POST or None)
     records = RequirementType.objects.select_related('category').filter(is_deleted = False, category_id=category_id)
     deleted_records = RequirementType.objects.select_related('category').filter(is_deleted = True, category_id=category_id)
+    requirement_category = RequirementCategory.objects.select_related('semester').get(id=category_id)
 
     # Initialize an empty list to store update forms for each record
     details = []
@@ -35,15 +36,18 @@ def main(request, category_id):
         'records': records,
         'details': details,
         'deleted_records': deleted_records,
+        'category_id': category_id,
+        'requirement_category': requirement_category 
     }
     return render(request, 'requirement-types/main.html', context)
 
 
 # @login_required
 @csrf_protect
-def create(request, category_id):
+def create(request):
     create_form = CreateRequirementType(request.POST or None)
     if create_form.is_valid():
+        category_id = request.POST.get('category_id')  
         # create_form.instance.created_by = request.user
         create_form.instance.category_id = category_id
         create_form.save()
@@ -121,18 +125,22 @@ def edit(request, pk):
 
 # @login_required
 @csrf_protect
-def soft_delete(request, pk):
-    try:
-        record = RequirementType.objects.get(id=pk)
-         #After getting that record, this code will delete it.
-        # record.modified_by = request.user
-        record.deleted_at = timezone.now()
-        record.is_deleted=True
-        record.save()
-        messages.success(request, f'The record is successfully deleted!') 
-        return redirect('utilities:requirement-type')
-    except RequirementType.DoesNotExist:
-        return JsonResponse({'errors': 'Requirement Type record not found. Please try Again'}, status=404)
+def soft_delete(request):
+    if request.method == "POST":
+        pk = request.POST.get('primary-key')  
+
+        try:
+            record = RequirementType.objects.get(id=pk)
+            category_id = record.category_id
+            #After getting that record, this code will delete it.
+            # record.modified_by = request.user
+            record.deleted_at = timezone.now()
+            record.is_deleted=True
+            record.save()
+            messages.success(request, f'The record is successfully deleted!') 
+            return redirect('utilities:requirement-type', category_id)
+        except RequirementType.DoesNotExist:
+            return JsonResponse({'errors': 'Requirement Type record not found. Please try Again'}, status=404)
 
 
 # @login_required
@@ -163,8 +171,10 @@ def restore(request):
 
 # @login_required
 @csrf_protect
-def hard_delete(request, pk):
+def hard_delete(request):
     if request.method == 'POST':
+
+        pk = request.POST.get('primary-key')  
 
         # data = QueryDict(request.body.decode('utf-8'))
         # entered_password = data.get('password')

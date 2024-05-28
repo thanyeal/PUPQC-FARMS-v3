@@ -34,7 +34,8 @@
                     </thead>
                     <tbody>
                         {% for record, update_form in details%}
-                            <tr class="small"  onclick="window.location='{% url "utilities:requirement-type" category_id=record.id %}';">
+                            <tr class="small"   ondblclick="window.location='{% url 'utilities:requirement-type' category_id=record.id %}';"
+                            data-bs-toggle="tooltip" data-bs-html="true" title="Double-click to access the full content.">
                                 <td>
                                     {{ record.semester }}
                                 </td>
@@ -45,7 +46,8 @@
 
                                 <td>
                                     {% if record.description %}
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="#modal-description-{{record.id}}" >Show Description</a>
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#modal-description-{{record.id}}" 
+                                        data-bs-toggle="tooltip" data-bs-placement="bottom" title="Click to show description." >Show Description</a>
                                     
                                     {% else %}
                                         <i>No Description</i>

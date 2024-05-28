@@ -34,7 +34,7 @@
                             </a>
                         </li>
                         <li id="active-bins" class="nav-item ">
-                            <a class="nav-link" href="{% url 'requirements:bin' %}" >
+                            <a class="nav-link" href="{% url 'requirements:requirement-bin' %}" >
                                 <span class="nav-link-title text-center mr-ml">
                                     Requirement Bin
                                 </span>
@@ -82,7 +82,7 @@
             "{% url 'dashboard:dashboard' %}"       , 
             "{% url 'reports:reports' %}"           ,
             "{% url 'utilities:categories' %}"      ,
-            "{% url 'requirements:bin' %}"          ,
+            "{% url 'requirements:requirement-bin' %}"          ,
             "{% url 'monitoring:monitor' %}"        ,
             "{% url 'submissions:submission' %}"    ,
             "{% url 'utilities:roles' %}"           ,
@@ -103,7 +103,7 @@
                 else if (urlToCheck === "{% url 'utilities:categories' %}") {
                     elementId = "active-categories";
                 }
-                else if (urlToCheck === "{% url 'requirements:bin' %}") {
+                else if (urlToCheck === "{% url 'requirements:requirement-bin' %}") {
                     elementId = "active-bins";
                 }
                 else if (urlToCheck === "{% url 'submissions:submission' %}") {
@@ -134,7 +134,7 @@
                 else if (urlToCheck === "{% url 'utilities:categories' %}") {
                     elementId = "active-categories";
                 }
-                else if (urlToCheck === "{% url 'requirements:bin' %}") {
+                else if (urlToCheck === "{% url 'requirements:requirement-bin' %}") {
                     elementId = "active-bins";
                 }
                 else if (urlToCheck === "{% url 'submissions:submission' %}") {

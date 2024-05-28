@@ -17,7 +17,7 @@ class CreateSemester(forms.ModelForm):
 
     school_year = forms.ModelChoiceField(
         label = "School Year", 
-        widget=forms.Select(attrs={'class': 'form-control'}), 
+        widget=forms.Select(attrs={'class': 'form-control form-select'}), 
         queryset=SchoolYear.objects.filter(is_deleted=False), 
         required=True, 
         empty_label="Select a School Year",

@@ -41,10 +41,10 @@ urlpatterns = [
             #--------------------------[ REQUIREMENT TYPE  MODULE URLS ]--------------------------#
     path('categories/requirement-type/<uuid:category_id>/', requirement_type.main, name='requirement-type'),
     path('categories/requirement-type/create/', requirement_type.create, name='requirement-type-create'),
-    path('categories/requirement-type/edit/', requirement_type.edit, name='requirement-type-edit'),
-    path('categories/requirement-type/soft-delete/<uuid:category_id>/', requirement_type.soft_delete, name='requirement-type-soft-delete'),
+    path('categories/requirement-type/edit/<uuid:pk>/', requirement_type.edit, name='requirement-type-edit'),
+    path('categories/requirement-type/soft-delete/', requirement_type.soft_delete, name='requirement-type-soft-delete'),
     path('categories/requirement-type/restore/', requirement_type.restore, name='requirement-type-restore'),
-    path('categories/requirement-type/hard-delete/<uuid:category_id>/', requirement_type.hard_delete, name='requirement-type-hard=delete'),
+    path('categories/requirement-type/hard-delete/', requirement_type.hard_delete, name='requirement-type-hard=delete'),
 
 
 

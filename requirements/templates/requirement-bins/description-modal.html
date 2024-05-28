@@ -1,0 +1,50 @@
+{% load crispy_forms_tags %}       
+       
+       {% comment %} Create Modal  {% endcomment %}
+        <div class="modal modal-blur fade" id="modal-description-{{record.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <form 
+                    autocomplete="off" 
+                    id="create-form"
+                    class="modal-content">
+                    {% csrf_token %}
+
+                    <div class="modal-header">
+                        <div class="alert-primary" role="alert">
+                            <div class="d-flex">
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <circle cx="12" cy="12" r="9"></circle>
+                                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                        <polyline points="11 12 12 12 12 16 13 16"></polyline>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h5 class="modal-title">Description</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    
+                        <div class="p-2">
+                            {% if record.description %}
+                                {{ record.description|safe }}
+
+                            {% else %}
+                                <div class="text-center">
+                                    <i>No Description</i>
+                                </div>
+                            {% endif %}
+                       
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>

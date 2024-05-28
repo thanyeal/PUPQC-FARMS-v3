@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <style>
+        th {
+            font-size: .7rem !important;
+        }
+
+
+    </style>
+
+    <div class="page-wrapper">
+
+        <div class="page-header d-print-none">
+            <div class="container-xl">
+                <div class="row g-2 align-items-center">
+                    <div class="col">
+                        <h2 class="page-title">
+                            Requirement Bins
+                        </h2>
+
+                        <div class="page-pretitle">
+                            {{ requirement_category }}
+                        </div>
+                    </div>
+                    <div class="col-auto ms-auto d-print-none">
+                        <div class="btn-list">
+                            <span class="d-none d-sm-inline">
+                                <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-restore">
+                                    Recycle Bin
+                                </a>
+                            </span>
+                            <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-new-category">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                                Post New Requirement Bin
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% comment %} MODALS {% endcomment %}
+        {% include "requirement-bins/create-modal.html" %}
+        {% include "requirement-bins/restore-modal.html" %}
+
+        <div class="page-body">
+
+                {% comment %} DATA TABLE {% endcomment %}
+                {% include "requirement-bins/data-table.html" %}
+
+        </div>
+
+    </div>
+{% endblock %}
+
+
+{% block js_contents %}
+    {% include "requirement-bins/scripts.html" %}
+{% endblock js_contents %}
+
+
+{% block modal_contents %}
+    {% for record in deleted_records %}
+        {% include "requirement-bins/hard-delete-modal.html" %}
+    {% endfor %}
+
+    {% for record, update_form in details %}
+        {% include "requirement-bins/edit-modal.html" %}
+        {% include "requirement-bins/soft-delete-modal.html" %}
+
+        {% include "requirement-bins/description-modal.html" %}
+    {% endfor %}
+
+{% endblock modal_contents %}

@@ -1,0 +1,79 @@
+{% load crispy_forms_tags %}       
+       
+       {% comment %} Create Modal  {% endcomment %}
+        <div class="modal modal-blur fade" id="modal-edit-{{ record.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+ 
+                <div class="modal-header">
+                        <div class="alert-primary" role="alert">
+                            <div class="d-flex">
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <circle cx="12" cy="12" r="9"></circle>
+                                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                        <polyline points="11 12 12 12 12 16 13 16"></polyline>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h5 class="modal-title">Edit a Requirement Bin</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    
+                    <div class="modal-body">
+                        <form autocomplete="off" 
+                        id="edit-form-{{ record.id }}"
+                        class="edit-form"
+                        data-id="{{ record.id }}">
+                        {% csrf_token %}
+
+
+                        <input type='hidden' name="primary-key" value="{{ record.id }}">
+
+                        <div class="mb-3">
+                            <label class="form-label">Requirement Category <small class="text-red">(Required)</small></label>
+                            {{ update_form.category }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Title <small class="text-red">(Required)</small></label>
+                            {{ update_form.name }}
+                        </div>
+
+                        <div class="mb-3 row">
+                           
+                            <div class="col">
+                                <label class="form-label">Status <small class="text-red">(Required)</small></label>
+                                {{ update_form.status }}
+                            </div>
+
+                            <div class="col">
+                                <label class="form-label">Deadline <small class="text-red">(Required)</small></label>
+                                {{ update_form.deadline }}
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Description <small>(Optional)</small></label>
+                            <textarea id="tinymce-mytextarea" name="description" placeholder="Enter text here...">{{update_form.description.value}}</textarea>
+                        </div>
+
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="close-{{ record.id }}" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" id="save-changes-{{record.id}}" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+
+
+
+

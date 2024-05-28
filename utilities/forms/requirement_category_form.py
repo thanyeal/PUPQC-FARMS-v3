@@ -23,7 +23,7 @@ class CreateRequirementCategory(forms.ModelForm):
 
     semester = forms.ModelChoiceField(
         label = "Semester", 
-        widget=forms.Select(attrs={'class': 'form-control'}), 
+        widget=forms.Select(attrs={'class': 'form-control form-select'}), 
         queryset=Semester.objects.filter(is_deleted=False, has_child_records = False), 
         required=True, 
         empty_label="Select a Semester",
@@ -53,7 +53,7 @@ class EditRequirementCategory(forms.ModelForm):
 
     semester = forms.ModelChoiceField(
         label = "Semester", 
-        widget=forms.Select(attrs={'class': 'form-control'}), 
+        widget=forms.Select(attrs={'class': 'form-control form-select'}), 
         queryset=Semester.objects.filter(is_deleted=False), 
         required=True, 
         empty_label="Select a Semester",
