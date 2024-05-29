@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <style>
+        th {
+            font-size: .7rem !important;
+        }
+    </style>
+
+    <div class="page-wrapper">
+
+        <div class="page-header d-print-none">
+            <div class="container-xl">
+                <div class="row g-2 align-items-center">
+                    <div class="col">
+                        <h2 class="page-title">
+                            Edit Permissions: {Role Name}
+                        </h2>
+                        <span class="page-pretitle mt-2 text-red">Warning: Unauthorized faculty personnel is prohibited from accessing this page.</span>
+                    </div>
+                    <div class="col-auto ms-auto d-print-none">
+                        <div class="btn-list">
+                            <span class="d-none d-sm-inline">
+                                <a class="btn" href="{% url 'utilities:roles' %}" >
+                                    Cancel
+                                </a>
+                            </span>
+                            <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-new-category">
+                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-device-floppy"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg>
+                                Save
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-body">
+            <div class="container-xl">
+
+                {% comment %} Edit Modal  {% endcomment %}
+                <div class="modal modal-blur fade" id="modal-util-edit" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="alert-primary" role="alert">
+                                    <div class="d-flex">
+                                        <div>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                <circle cx="12" cy="12" r="9"></circle>
+                                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                                <polyline points="11 12 12 12 12 16 13 16"></polyline>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h5 class="modal-title">{Modulename} Sub Modules</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+
+                                <span>Dito yung slight explanation natin bakit kailangan ni user/admin mag edit ng users permission for user role para lang magkaroon siya ng headstart sa pag-walk through sa module na ito.</span>
+
+                                <div class="mt-4 table-responsive">
+                                    <table class="table card-table table-vcenter text-nowrap datatable">
+
+                                        <div class="card-body border-bottom py-3">
+                                            <div class="d-flex">
+                                                <div class="text-muted">
+                                                    Show
+                                                    <div class="mx-2 d-inline-block">
+                                                    <input type="text" class="form-control form-control-sm" value="8" size="3" aria-label="Invoices count">
+                                                    </div>
+                                                    entries
+                                                </div>
+                                                <div class="ms-auto text-muted">
+                                                    Search:
+                                                    <div class="ms-2 d-inline-block">
+                                                    <input type="text" class="form-control form-control-sm" aria-label="Search invoice">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <thead>
+                                            <tr>
+                                                <th>Sub Module Name</th>
+                                                <th>
+                                                    <input class="form-check-input m-0 align-middle" type="checkbox">
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    Requirement Assignees
+                                                </td>
+                                                <td>
+                                                    <input class="form-check-input m-0 align-middle" type="checkbox">
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="card">
+
+                        <div class="card-body border-bottom py-3">
+                            <div class="d-flex">
+                                <div class="text-muted">
+                                    Show
+                                    <div class="mx-2 d-inline-block">
+                                    <input type="text" class="form-control form-control-sm" value="8" size="3" aria-label="Invoices count">
+                                    </div>
+                                    entries
+                                </div>
+                                <div class="ms-auto text-muted">
+                                    Search:
+                                    <div class="ms-2 d-inline-block">
+                                    <input type="text" class="form-control form-control-sm" aria-label="Search invoice">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table card-table table-vcenter text-nowrap datatable">
+                                <thead>
+                                    <tr>
+                                        <th>Modules</th>
+                                        <th>Sub Modules</th>
+                                        <th>Create/Append</th>
+                                        <th>Read</th>
+                                        <th>Update</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            Dashboard
+                                        </td>
+                                        <td>
+                                            <button class="btn align-text-top" data-bs-toggle="modal" data-bs-target="#modal-util-edit">Edit</button>
+                                        </td>
+                                        <td>
+                                            <input class="form-check-input m-0 align-middle disabled not-allowed" type="checkbox" readonly="" disabled>
+                                        </td>
+                                        <td>
+                                            <input class="form-check-input m-0 align-middle" type="checkbox" readonly="" checked>
+                                        </td>
+                                        <td>
+                                            <input class="form-check-input m-0 align-middle disabled not-allowed" type="checkbox" readonly="" disabled>
+                                        </td>
+                                        <td>
+                                            <input class="form-check-input m-0 align-middle disabled not-allowed" type="checkbox" readonly="" disabled>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Users
+                                        </td>
+                                        <td>
+                                            <button class="btn align-text-top" data-bs-toggle="modal" data-bs-target="#modal-util-edit">Edit</button>
+                                        </td>
+                                        <td>
+                                            <input class="form-check-input m-0 align-middle" type="checkbox" readonly="" checked>
+                                        </td>
+                                        <td>
+                                            <input class="form-check-input m-0 align-middle" type="checkbox" readonly="" checked>
+                                        </td>
+                                        <td>
+                                            <input class="form-check-input m-0 align-middle" type="checkbox" readonly="" checked>
+                                        </td>
+                                        <td>
+                                            <input class="form-check-input m-0 align-middle disabled not-allowed" type="checkbox" readonly="" disabled>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="card-footer d-flex align-items-center">
+                            <p class="m-0 text-muted">Showing <span>1</span> to <span>8</span> of <span>16</span> entries</p>
+                            <ul class="pagination m-0 ms-auto">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                                    <!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>
+                                    prev
+                                    </a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">
+                                    next <!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

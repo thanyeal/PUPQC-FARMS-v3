@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'monitoring',
     'reports',
     '_shared',
+    'utilities',
 ]
 
 MIDDLEWARE = [
