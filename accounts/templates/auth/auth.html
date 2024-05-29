@@ -7,64 +7,190 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
         <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+        <link rel="icon" href="{% static 'img/pupqcfaculty.png' %}">
         <title>myPUPQC-FARMS</title>
         {% include 'partials/_cssdep.html' %}
-        
+
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400;700&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400;700&family=Outfit:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     </head>
 
-    <body style="font-family: 'Figtree' !important">
+    <style>
+        .upper-circle {
+            position: absolute;
+            width: 780px;
+            height: 350px;
+            top: 10px;
+            left: 800px;
+            border-radius: 200px 0px 0px 200px;
+            background-color: #700001;
+            transform: rotate(-38.05deg);
+        }
+        
+        .bottom-small-red-circle,
+        .bottom-side-yellow-circle,
+        .bottom-left-yellow-small-circle,
+        .bottom-left-red-circle {
+            position: absolute;
+            border-radius: 50%;
+            background-color: #FEBE00;
+        }
+        
+        .bottom-small-red-circle {
+            background-color: #700001;
+            width: 28px;
+            height: 28px;
+            top: 574px;
+            left: 1266px;
+        }
+        
+        .bottom-side-yellow-circle {
+            width: 60px;
+            height: 62px;
+            top: 592px;
+            left: 1204px;
+        }
+        
+        .bottom-left-yellow-small-circle {
+            width: 28px;
+            height: 28px;
+            top: 628px;
+            left: 134px;
+        }
+        
+        .bottom-left-red-circle {
+            width: 60px;
+            height: 62px;
+            top: 656px;
+            left: 149px;
+            background-color: #700001;
+        }
+        
+    </style>
 
-        {% include 'partials/_alerts.html' %}
+    <style>
+        body {
+            background-image: url('{% static "img/pupbg.png" %}');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow-x:hidden;
+            height: 100% !important;
+        }
 
+        .bgcl {
+            background-color: white;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.8;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        h1, h2, h3, h4, h5, h6,
+        p, li > a, a, .form-check-label {
+            font-family: "Outfit", sans-serif !important;
+        }
+        .card-rad {
+            border-radius: 1rem;
+        }
+        .hr-text:before {
+            content: "";
+            margin-left: 0;
+            margin-right: 0;
+        }
+        .hr-text:before {
+            content: "";
+            margin-left: 0rem;
+        }
+        .hr-text:after {
+            content: "";
+            margin-left: 0 !important;  
+        }
+        .page-center {
+            position: relative;
+            z-index: 2;
+        }
+        .containerz {
+            overflow: hidden;
+        }
+        .card {
+            z-index: 3;
+        }
+
+    </style>
+
+    <body style="font-family: 'Outfit', sans-serif !important;">
         <div class="page page-center">
+            <h1 class="logo py-4" style="margin-left: 50px;">
+                <a href="#">
+                    <img src="{% static 'img/myPUPQC.png' %}" alt="Iskonect" width="150">
+                </a>
+            </h1>
             <div class="container container-tight py-4">
-                <div class="text-center mb-4">
-                    <a href="." class="navbar-brand navbar-brand-autodark"><img src="./static/logo.svg" height="36" alt=""></a>
-                </div>
-                <div class="card card-md">
+                <div class="card card-md card-rad">
                     <div class="card-body">
-                    <h2 class="h2 text-center mb-4">Welcome to FARMS</h2>
-                    <form action="./" method="get" autocomplete="off" novalidate>
-                        <div class="mb-3">
-                            <label class="form-label">Webmail</label>
-                            <input type="email" class="form-control" placeholder="user@pup.edu.ph" autocomplete="off">
+                        <h2 class="h2 text-center mb-0 fw-bolder">PUP-FARMS Faculty Module</h2>
+                        <div class="text-center text-muted">
+                            <span class="form-check-label">Sign in to start your session</span>
                         </div>
-                        <div class="mb-2">
-                            <label class="form-label">
-                                Password
-                                <span class="form-label-description">
-                                    <a href=".">I forgot password</a>
-                                </span>
-                            </label>
-                            <div class="input-group input-group-flat">
-                                <input type="password" class="form-control"  placeholder="Enter password"  autocomplete="off">
-                                <span class="input-group-text">
-                                <a href="#" class="link-secondary" title="Show password" data-bs-toggle="tooltip"><!-- Download SVG icon from http://tabler-icons.io/i/eye -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
-                                </a>
-                                </span>
+                        <form action="./" method="get" autocomplete="off" novalidate>
+                            <div class="mb-3 mt-4">
+                                <input type="email" class="form-control" placeholder="Email Address" autocomplete="off">
                             </div>
-                        </div>
-                        <div class="mb-2">
-                            <label class="form-check">
-                                <input type="checkbox" class="form-check-input"/>
-                                <span class="form-check-label">Remember me on this device</span>
-                            </label>
-                        </div>
-                        <div class="form-footer">
-                            <button type="submit" class="btn btn-primary w-100">Sign in</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="text-center mb-4">
-                                    
-                    <p class="text-sm text-gray-600">By using this service, you understood, agree, and follow <br/> to the Polytechnic University of the Philippines
-                        <br/><a href="https://www.pup.edu.ph/terms/" class="text-primary fst-normal fw-semibold">Terms of Use</a>
-                        and <a href="https://www.pup.edu.ph/privacy/" class="text-primary fst-normal fw-semibold">Privacy Statement</a></p>
+                            <div class=" mt-2">
+                                <div class="input-group input-group-flat">
+                                    <input type="password" class="form-control"  placeholder="Password"  autocomplete="off">
+                                    <span class="input-group-text">
+                                    <a href="#" class="link-secondary" title="Show password" data-bs-toggle="tooltip"><!-- Download SVG icon from http://tabler-icons.io/i/eye -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
+                                    </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <button type="submit" class="btn btn-primary w-100">Log in</button>
+                            </div>
+                            <div class="hr-text mt-3 mb-2"></div>
+                            <div class="text-center text-muted py-2">
+                                <span class="form-check-label">A user's guide for using the Faculty Requirements Monitoring System</span>
+                            </div>
+                            <div class="btn-list" style="flex-wrap: nowrap !important;">
+                                <a href="#" class="btn btn-gray w-100 fw-bolder text-muted">
+                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-youtube"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M2 8a4 4 0 0 1 4 -4h12a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-12a4 4 0 0 1 -4 -4v-8z" /><path d="M10 9l5 3l-5 3z" /></svg>
+                                    Youtube
+                                </a>
+                                <a href="#" class="btn btn-gray w-100 fw-bolder text-muted">
+                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-facebook"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" /></svg>
+                                    Facebook
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="text-center mb-4">
+                                        
+                        <p class="text-sm text-gray-600">By using this service, you understood, agree, and follow <br/> to the Polytechnic University of the Philippines
+                            <br/><a href="https://www.pup.edu.ph/terms/" class="text-decoration-underline text-blue fst-normal fw-medium">Terms of Use</a>
+                            and <a href="https://www.pup.edu.ph/privacy/" class="text-decoration-underline text-blue fst-normal fw-medium">Privacy Statement</a></p>
+                    </div>
                 </div>
             </div>
         </div>
-
+        <div class="page-indx containerz">
+            <div class="upper-circle"></div>
+            <div class="bottom-small-red-circle"></div>
+            <div class="bottom-side-yellow-circle"></div>
+            <div class="bottom-left-yellow-small-circle"></div>
+            <div class="bottom-left-red-circle"></div>
+        </div>
+        <div class="bgcl">
+        </div>
+         
     </body>
 
     {% include 'partials/_jvsdep.html' %}
