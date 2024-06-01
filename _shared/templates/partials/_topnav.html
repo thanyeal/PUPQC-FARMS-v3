@@ -63,16 +63,18 @@
                             <div class="dropdown-menu">
                                 <div class="dropdown-menu-columns">
                                     <div class="dropdown-menu-column">
-                                        <a class="dropdown-item" href="#">
-                                            Academic Year & Semester
+                                        <a class="dropdown-item" href="{% url 'utilities:school-year-main' %}">
+                                            Academic Year 
                                         </a>
-                                        <a class="dropdown-item" href="{% url 'requirements:categories' %}" id="active-categories">
+
+                                        <a class="dropdown-item" href="{% url 'utilities:semester-main' %}">
+                                            Semester
+                                        </a>
+
+                                        <a class="dropdown-item" href="{% url 'utilities:categories' %}" id="active-categories">
                                             Requirement Categories
                                         </a>
-                                        <a class="dropdown-item" href="{% url 'requirements:types' %}" id="active-types">
-                                            Requirement Type
-                                        </a>
-                                        <a class="dropdown-item" href="{% url 'utilities:roles' %}" id="active-util">
+                                        <a class="dropdown-item" href="{% url 'utilities:roles' %}" id="active-roles">
                                             Permissions
                                         </a>
                                     </div>
@@ -89,21 +91,23 @@
         var currentURL = window.location.href;
     
         var urlsToCheck = [
-            {"url": "{% url 'accounts:users' %}",           "ids": ["active-users"]},
-            {"url": "{% url 'accounts:profile' %}",         "ids": ["active-users-profile"]},  // Added profile URL
-            {"url": "{% url 'dashboard:dashboard' %}",      "ids": ["active-dashboard"]},
-            {"url": "{% url 'reports:reports' %}",          "ids": ["active-reports"]},
-            {"url": "{% url 'requirements:categories' %}",  "ids": ["active-categories"]},
-            {"url": "{% url 'requirements:bin' %}",         "ids": ["active-bins"]},
-            {"url": "{% url 'requirements:types' %}",       "ids": ["active-types"]},
-            {"url": "{% url 'submissions:submission' %}",   "ids": ["active-subm"]},
-            {"url": "{% url 'utilities:roles' %}",          "ids": ["active-util"]}
+            {"url": "{% url 'accounts:users' %}",                   "ids": ["active-users"]},
+            {"url": "{% url 'accounts:profile' %}",                 "ids": ["active-users-profile"]},  // Added profile URL
+            {"url": "{% url 'dashboard:dashboard' %}",              "ids": ["active-dashboard"]},
+            {"url": "{% url 'reports:reports' %}",                  "ids": ["active-reports"]},
+            {"url": "{% url 'utilities:categories' %}",             "ids": ["active-categories"]},
+            {"url": "{% url 'requirements:requirement-bin' %}",     "ids": ["active-bins"]},
+            {"url": "{% url 'submissions:submission' %}",           "ids": ["active-subm"]},
+            {"url": "{% url 'utilities:roles' %}",                  "ids": ["active-roles"]},
+            {"url": "{% url 'utilities:semester-main' %}",          "ids": ["active-semester"]},
+            {"url": "{% url 'utilities:school-year-main' %}",       "ids": ["active-school-year"]},
         ];
     
         var utilitiesUrls = [
-            "{% url 'requirements:categories' %}",
-            "{% url 'requirements:types' %}",
-            "{% url 'utilities:roles' %}"
+            "{% url 'utilities:categories' %}",
+            "{% url 'utilities:roles' %}",
+            "{% url 'utilities:school-year-main' %}",
+            "{% url 'utilities:semester-main' %}"
         ];
     
         urlsToCheck.forEach(function(item) {
