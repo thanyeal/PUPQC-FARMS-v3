@@ -10,8 +10,9 @@ from requirements.models import RequirementBin, RequirementBinContent
 from django.utils import timezone
 from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth.decorators import login_required
 
-
+@login_required
 def main(request):
     state = 'active'
     serialized_state = json.dumps(state)
@@ -39,7 +40,7 @@ def main(request):
     return render(request, 'requirement-bins/main.html', context)
 
 
-# @login_required
+@login_required
 @csrf_protect
 def create(request):
     create_form = CreateRequirementBin(request.POST or None)
@@ -78,7 +79,7 @@ def create(request):
     
 
 
-# @login_required
+@login_required
 @csrf_protect
 def edit(request):
     if request.method == "POST":
@@ -135,7 +136,7 @@ def edit(request):
                 return JsonResponse({'errors': update_form.errors}, status=400)
         
 
-# @login_required
+@login_required
 @csrf_protect
 def soft_delete(request):
     if request.method == "POST":
@@ -155,7 +156,7 @@ def soft_delete(request):
             return JsonResponse({'errors': 'Requirement Bin record not found. Please try Again'}, status=404)
 
 
-# @login_required
+@login_required
 @csrf_protect
 def restore(request):
     if request.method == 'POST':
@@ -181,7 +182,7 @@ def restore(request):
         return JsonResponse({'error': 'Invalid request method.'}, status=404)
           
 
-# @login_required
+@login_required
 @csrf_protect
 def hard_delete(request):
     if request.method == 'POST':

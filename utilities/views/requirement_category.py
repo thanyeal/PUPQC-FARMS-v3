@@ -10,6 +10,8 @@ from utilities.views.semester import *
 from django.utils import timezone
 from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth.decorators import login_required
+
 
 def permissions(request):
     state = 'active'
@@ -37,7 +39,7 @@ def req_type(request):
     return render(request, 'req_typ.html', context)
 
 
-
+@login_required
 def main(request):
     state = 'active'
     serialized_state = json.dumps(state)
@@ -65,7 +67,7 @@ def main(request):
     return render(request, 'requirement-categories/main.html', context)
 
 
-# @login_required
+@login_required
 @csrf_protect
 def create(request):
     create_form = CreateRequirementCategory(request.POST or None)
@@ -89,7 +91,7 @@ def create(request):
     
 
 
-# @login_required
+@login_required
 @csrf_protect
 def edit(request, pk):
     # Retrieve the type object with the given primary key (pk)
@@ -144,7 +146,7 @@ def edit(request, pk):
             return JsonResponse({'errors': update_form.errors}, status=400)
         
 
-# @login_required
+@login_required
 @csrf_protect
 def soft_delete(request, pk):
     try:
@@ -160,7 +162,7 @@ def soft_delete(request, pk):
         return JsonResponse({'errors': 'Requirement Category record not found. Please try Again'}, status=404)
 
 
-# @login_required
+@login_required
 @csrf_protect
 def restore(request):
     if request.method == 'POST':
@@ -186,7 +188,7 @@ def restore(request):
         return JsonResponse({'error': 'Invalid request method.'}, status=404)
           
 
-# @login_required
+@login_required
 @csrf_protect
 def hard_delete(request, pk):
     if request.method == 'POST':
@@ -216,7 +218,7 @@ def hard_delete(request, pk):
         return JsonResponse({'success': False, 'error': 'Invalid request'})
     
 
-
+@login_required
 def hard_delete(request, pk):
     if request.method == 'POST':
 

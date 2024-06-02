@@ -1,9 +1,11 @@
 from django.urls import path
-from . import views
+from accounts.views import authentication, accounts
 
 app_name = 'accounts'
 
 urlpatterns = [
-    path('', views.accounts_module, name='users'),
-    path('profile/', views.accounts_profile, name='profile'),
+    path('', accounts.accounts_module, name='users'),
+    path('profile/', accounts.accounts_profile, name='profile'),
+    path('login/', authentication.login_user, name='login'),
+
 ]

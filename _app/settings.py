@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     "crispy_forms",
     "crispy_bootstrap5",
 
-    'accounts',
+
+    'accounts.apps.AccountsConfig',
     'dashboard',
     'requirements',
     'submissions',
@@ -147,3 +148,13 @@ STATICFILES_DIRS = [BASE_DIR / '_shared/static']
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+AUTH_USER_MODEL = 'accounts.FARMSUser'
+AUTH_FACULTY_MODEL = 'accounts.FISFaculty'
+
+
+# AUTHENTICATION BACKENDS
+AUTHENTICATION_BACKENDS = [
+    'accounts.backends.MultiTableAuthenticationBackend',  
+]
