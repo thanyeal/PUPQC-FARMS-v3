@@ -45,16 +45,18 @@ def main(request):
 @login_required
 @csrf_protect
 def create(request):
-    create_form = CreateSchoolYear(request.POST or None)
-    if create_form.is_valid():
-        # create_form.instance.created_by = request.user
-        create_form.save()
-        messages.success(request, f'New School Year is successfully added!') 
-        return JsonResponse({'success': True }, status=200)
+    if request.method == 'POST':
+        create_form = CreateSchoolYear(request.POST or None)
+        if create_form.is_valid():
+            # create_form.instance.created_by = request.user
+            create_form.save()
+            print('valid ba?')
+            messages.success(request, f'New Academic Year is successfully added!') 
+            return JsonResponse({'success': True }, status=200)
 
-    else:
-        # Return a validation error using a JSON response
-        return JsonResponse({'errors': create_form.errors}, status=400)
+        else:
+            # Return a validation error using a JSON response
+            return JsonResponse({'errors': create_form.errors}, status=400)
     
 
 
